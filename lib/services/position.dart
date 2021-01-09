@@ -5,20 +5,24 @@ import 'package:location/location.dart';
 import 'dart:math';
 
 class Position {
-  final List<double> tolimasKampas = [55.551132, 25.057135];
-  final List<double> ivaziavimas = [55.55027, 25.064513];
-  final double latitudeMultiplyer = 111200.00;
-  final double longitudeMultiplyer = 63788.00;
+  static final List<double> tolimasKampas = [55.551132, 25.057135];
+  static final List<double> ivaziavimas = [55.55027, 25.064513];
+  static final double latitudeMultiplyer = 111200.00;
+  static final double longitudeMultiplyer = 63788.00;
 
-  List<double> getPositionMeters(LocationData locationData) {
+  static List<double> getPositionMeters(LocationData locationData) {
     final farLatShift_X =
         (locationData.latitude - tolimasKampas[0]) * latitudeMultiplyer;
     final farLongShift_Y =
-        (locationData.latitude - tolimasKampas[1]) * longitudeMultiplyer;
+        (locationData.longitude - tolimasKampas[1]) * longitudeMultiplyer;
     final nearLatShift_X =
         (locationData.latitude - ivaziavimas[0]) * latitudeMultiplyer;
     final nearLongShift_Y =
-        (locationData.latitude - ivaziavimas[1]) * longitudeMultiplyer;
+        (locationData.longitude - ivaziavimas[1]) * longitudeMultiplyer;
+    // print("farLatShift_X - tolimas " +
+    //     (locationData.latitude - tolimasKampas[0]).toString());
+    // print("farLatShift_X: " + farLatShift_X.toString());
+    // print("nearLatShift_X" + nearLatShift_X.toString());
 
     final dirty_Y =
         0.5173625 * farLatShift_X - 0.855778 * farLongShift_Y + 447.6036;
@@ -31,7 +35,7 @@ class Position {
     return [shift_X_meters, shift_Y_meters];
   }
 
-  List<double> getRelativePosition(
+  static List<double> getRelativePosition(
       LocationData locationData, List<double> marginsWidhts) {
     //margins values should be x-left, x-right, width, y-bottom, y-top, height
     List<double> meters = getPositionMeters(locationData);
@@ -48,6 +52,18 @@ class Position {
                 marginsWidhts[5] * marginsWidhts[4]) +
         marginsWidhts[5] * marginsWidhts[3];
 
+    return [fraction_x, fraction_y];
+  }
+
+  static List<double> getRelativePositionForAlign(LocationData locationData) {
+    //margins values should be x-left, x-right, width, y-bottom, y-top, height
+    // print(locationData.latitude.toString() +
+    //     ',' +
+    //     locationData.longitude.toString());
+    List<double> meters = getPositionMeters(locationData);
+    // print("Meters " + meters.toString());
+    final double fraction_x = (meters[0] / 911.8 * 2) - 1;
+    final double fraction_y = (meters[1] / 911.8) - 1;
     return [fraction_x, fraction_y];
   }
 }

@@ -68,8 +68,8 @@ class _AnimalDetailState extends State<AnimalDetail> {
                   buttonHeight: 25.0,
                   alignment: MainAxisAlignment.center,
                   children: [
-                    FlatButton(
-                        color: Colors.white.withOpacity(.8),
+                    RaisedButton(
+                        color: Colors.white,
                         onPressed: () {
                           if (widget.id + 1 <
                               amimalsprovider.animalList.length) {

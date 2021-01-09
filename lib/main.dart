@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/animaldetail.dart';
 import 'package:safari_one/Pages/homepage.dart';
 import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:safari_one/services/NoAnimPageRoute.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // debugPaintSizeEnabled = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  final Color _baseColor = Color(0xFFe6ebf2);
+  final Color _baseColor = Color(0xaaeeeeee);
 
   Color get baseColor => _baseColor;
   @override
@@ -39,7 +44,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: (RouteSettings values) {
             String index = values.name.split("/")[2];
             print("Index: $index");
-            return MaterialPageRoute(
+            return NoAnimationMaterialPageRoute(
                 builder: (BuildContext conext) =>
                     AnimalDetail(int.parse(index)));
           }),
