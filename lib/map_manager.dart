@@ -46,6 +46,7 @@ class _MapManagerState extends State<MapManager> {
           children: [
             Expanded(
               child: Container(
+                  height: MediaQuery.of(context).size.height - 120,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: const Color(0xff7c94b6),
@@ -53,7 +54,7 @@ class _MapManagerState extends State<MapManager> {
                       colorFilter:
                           ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
                       image: AssetImage("assets/pics/safarifinal.jpg"),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                   ),
                   child: Stack(
@@ -98,7 +99,7 @@ class _MapManagerState extends State<MapManager> {
                           fit: BoxFit.fitWidth,
                         ),
                         border: Border.all(
-                          color: Color(0xff757575),
+                          color: NeumorphicTheme.accentColor(context),
                           width: 2,
                         ),
                         boxShadow: [

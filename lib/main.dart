@@ -7,10 +7,15 @@ import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/services/NoAnimPageRoute.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +33,7 @@ class MyApp extends StatelessWidget {
           themeMode: ThemeMode.light,
           theme: NeumorphicThemeData(
             baseColor: _baseColor,
-            accentColor: Colors.pinkAccent,
+            accentColor: Colors.deepOrangeAccent,
             lightSource: LightSource.topLeft,
             depth: 3,
           ),

@@ -23,66 +23,94 @@ class _AnimalDetailState extends State<AnimalDetail> {
     final media_height = MediaQuery.of(context).size.height;
     return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
       return Container(
-        width: media_width * .9,
-        height: media_height * .9,
         decoration: BoxDecoration(
-          color: NeumorphicTheme.baseColor(context),
-          borderRadius: BorderRadius.all(Radius.circular(20)),
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
-            image: AssetImage(amimalsprovider.animalList[widget.id].imagePath),
+            colorFilter:
+                ColorFilter.mode(Color(0xff1c1c1c), BlendMode.multiply),
+            image: AssetImage("assets/pics/safarifinal.jpg"),
             fit: BoxFit.scaleDown,
           ),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 1,
-                offset: Offset(-3, -3),
-                color: Colors.white.withOpacity(.15)),
-            BoxShadow(
-                blurRadius: 3,
-                offset: Offset(3, 3),
-                color: Colors.black.withOpacity(.35)),
-          ],
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Spacer(
-              flex: 1,
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 3,
-                    offset: Offset(2, 2),
-                    color: Colors.black,
-                  )
-                ],
+        child: Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              border: Border.all(
+                  color: NeumorphicTheme.accentColor(context), width: 1),
+              image: DecorationImage(
+                colorFilter:
+                    ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
+                image:
+                    AssetImage(amimalsprovider.animalList[widget.id].imagePath),
+                fit: BoxFit.fitHeight,
               ),
-              child: Text(
-                amimalsprovider.animalList[widget.id].name,
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  fontFamily: "nunitor",
-                  fontSize: 40,
-                  color: Color(0xFF548FAC),
-                  // color: NeumorphicTheme.accentColor(context),
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Spacer(
+                flex: 1,
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 1),
+                  color: Colors.orangeAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      blurRadius: 3,
+                      offset: Offset(2, 2),
+                      color: Colors.black,
+                    )
+                  ],
+                ),
+                child: Text(
+                  amimalsprovider.animalList[widget.id].name,
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      // fontFamily: "nunitor",
+                      fontSize: 40,
+                      color: Colors.white
+                      // color: NeumorphicTheme.accentColor(context),
+                      ),
                 ),
               ),
-            ),
-            Spacer(
-              flex: 20,
-            ),
-            ButtonBar(
-              buttonHeight: 25.0,
-              alignment: MainAxisAlignment.center,
-              children: [
-                RaisedButton(
+              Spacer(
+                flex: 20,
+              ),
+              ButtonBar(
+                buttonHeight: 25.0,
+                alignment: MainAxisAlignment.center,
+                children: [
+                  RaisedButton(
                     padding: EdgeInsets.all(5.0),
+                    shape: CircleBorder(),
+                    elevation: 3,
+                    color: Colors.white,
+                    onPressed: () {
+                      if (widget.id - 1 > 0) {
+                        return Navigator.pushReplacementNamed(
+                            context, "/animal/" + (widget.id - 1).toString());
+                      } else {
+                        return AlertDialog(
+                          title: Text("Daugau gyvunėlių nėra"),
+                          actions: [
+                            FlatButton(onPressed: null, child: Text("Ok"))
+                          ],
+                        );
+                      }
+                    },
+                    child: Icon(
+                      Icons.navigate_before,
+                      color: NeumorphicTheme.accentColor(context),
+                      size: 40,
+                    ),
+                  ),
+                  RaisedButton(
+                    padding: EdgeInsets.all(5.0),
+                    shape: CircleBorder(),
                     elevation: 3,
                     color: Colors.white,
                     onPressed: () {
@@ -98,24 +126,31 @@ class _AnimalDetailState extends State<AnimalDetail> {
                         );
                       }
                     },
-                    child: FButtonText1(
-                      "Sekantis",
-                    )),
-                RaisedButton(
-                    padding: EdgeInsets.all(5.0),
-                    elevation: 3,
-                    color: Colors.white,
-                    onPressed: () => Navigator.pop(context),
-                    child: FButtonText1(
-                      "Grįžti",
-                    )),
-              ],
-            ),
-            Spacer(
-              flex: 1,
-            ),
-          ],
-        ),
+                    child: Icon(
+                      Icons.navigate_next,
+                      color: NeumorphicTheme.accentColor(context),
+                      size: 40,
+                    ),
+                  ),
+                  RaisedButton(
+                      padding: EdgeInsets.all(5.0),
+                      shape: CircleBorder(),
+                      elevation: 8,
+                      color: Colors.white,
+                      onPressed: () => Navigator.pop(context),
+                      child: Icon(
+                        Icons.close_rounded,
+                        color: NeumorphicTheme.accentColor(context),
+                        size: 40,
+                      )),
+                ],
+              ),
+              Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
+        ]),
       );
     });
   }

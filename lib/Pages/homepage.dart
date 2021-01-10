@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
               child: Text(
                 "Pradėti",
                 style: TextStyle(
-                    color: _tapColor,
+                    color: NeumorphicTheme.accentColor(context),
                     fontSize: MediaQuery.of(context).size.width * .03),
               ),
             ),
