@@ -76,6 +76,7 @@ class _MapNaviState extends State<MapNavi> {
 
   @override
   void dispose() {
+    subscription.cancel();
     super.dispose();
   }
 }

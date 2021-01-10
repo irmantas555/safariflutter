@@ -22,7 +22,7 @@ class _ClockState extends State<Clock> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    this._timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (mounted) {
         setState(() {
           passed += Duration(seconds: 1);
@@ -31,10 +31,6 @@ class _ClockState extends State<Clock> {
         // print(passed.inMilliseconds);
       }
     });
-  }
-
-  void _stopTimer() {
-    if (_timer.isActive) {}
   }
 
   @override

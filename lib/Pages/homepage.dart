@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:safari_one/models/timer.dart';
 
 class HomePage extends StatelessWidget {
-  Color _tapColor = Colors.pinkAccent;
+  final Color _tapColor = Colors.pinkAccent;
 
   @override
   Widget build(BuildContext context) {

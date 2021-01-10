@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/models/animals.dart';
-import 'package:safari_one/widgets/flbutontext.dart';
 
 class AnimalDetail extends StatefulWidget {
-  int id;
+  final int id;
 
   AnimalDetail(this.id);
 
@@ -19,8 +18,8 @@ class AnimalDetail extends StatefulWidget {
 class _AnimalDetailState extends State<AnimalDetail> {
   @override
   Widget build(BuildContext context) {
-    final media_width = MediaQuery.of(context).size.width;
-    final media_height = MediaQuery.of(context).size.height;
+    final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHeight = MediaQuery.of(context).size.height;
     return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
       return Container(
         decoration: BoxDecoration(
