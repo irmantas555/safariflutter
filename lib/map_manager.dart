@@ -58,7 +58,7 @@ class _MapManagerState extends State<MapManager> {
                   ),
                   child: Stack(
                     children: [
-                      Align(alignment: Alignment(0, 1), child: Clock()),
+                      Align(alignment: Alignment(-1, -1), child: Clock()),
                       MapNavi(),
                     ],
                   )),
@@ -67,7 +67,7 @@ class _MapManagerState extends State<MapManager> {
               height: 110,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: const Color(0xaaeeeeee),
+                color: NeumorphicTheme.baseColor(context),
               ),
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,

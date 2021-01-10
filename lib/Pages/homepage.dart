@@ -7,33 +7,50 @@ import 'package:safari_one/models/timer.dart';
 
 class HomePage extends StatelessWidget {
   Color _tapColor = Colors.pinkAccent;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: NeumorphicTheme.baseColor(context),
       body: Center(
         child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-          Container(
-            width: 800,
-            height: 316,
-            child: Image.asset("assets/pics/safaribanner.png"),
-          ),
-          NeumorphicButton(
-            margin: EdgeInsets.only(top: 20),
-            onPressed: () {
-              print(Navigator.pushNamed(context, '/mapman'));
-            },
-            style: NeumorphicStyle(
-              shape: NeumorphicShape.flat,
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(10.0)),
+          children: [
+            Spacer(
+              flex: 20,
             ),
-            padding: const EdgeInsets.all(12.0),
-            child: Text("Pradėti", style: TextStyle(color: _tapColor, fontSize: 40),),
-          ),
-        ]),
+            ConstrainedBox(
+              constraints: BoxConstraints.loose(Size(
+                  MediaQuery.of(context).size.width * 0.6,
+                  MediaQuery.of(context).size.height)),
+              child: Image.asset(
+                "assets/pics/safaribanner.png",
+                fit: BoxFit.contain,
+              ),
+            ),
+            Spacer(),
+            NeumorphicButton(
+              margin: EdgeInsets.only(top: 20),
+              onPressed: () {
+                print(Navigator.pushNamed(context, '/mapman'));
+              },
+              style: NeumorphicStyle(
+                shape: NeumorphicShape.flat,
+                boxShape:
+                    NeumorphicBoxShape.roundRect(BorderRadius.circular(10.0)),
+              ),
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                "Pradėti",
+                style: TextStyle(
+                    color: _tapColor,
+                    fontSize: MediaQuery.of(context).size.width * .03),
+              ),
+            ),
+            Spacer(
+              flex: 20,
+            ),
+          ],
+        ),
       ),
     );
   }

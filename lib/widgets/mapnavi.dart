@@ -23,26 +23,6 @@ class _MapNaviState extends State<MapNavi> {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    // decoration: BoxDecoration(
-    //   shape: BoxShape.rectangle,
-    //   color: const Color(0xff7c94b6),
-    //   image: DecorationImage(
-    //     colorFilter: ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
-    //     image: AssetImage("assets/pics/safarifinal.jpg"),
-    //     fit: BoxFit.cover,
-    //   ),
-    // ),
-    // child:
-    // return Align(
-    //   // widthFactor: 1.0,
-    //   alignment: Alignment(1, 0),
-    //   child: Icon(
-    //     Icons.not_listed_location,
-    //     size: 40,
-    //     color: NeumorphicTheme.accentColor(context),
-    //   ),
-    // );
     return StreamBuilder<LocationData>(
         stream: Loc(Duration(seconds: 5)).stream,
         builder: (context, AsyncSnapshot<LocationData> snapshot) {

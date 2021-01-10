@@ -46,7 +46,7 @@ class Position {
                 marginsWidhts[2] * marginsWidhts[1]) +
         marginsWidhts[2] * marginsWidhts[0];
     final double fraction_y = meters[1] /
-            911.8 *
+            446.1 *
             (marginsWidhts[5] -
                 marginsWidhts[5] * marginsWidhts[3] -
                 marginsWidhts[5] * marginsWidhts[4]) +
@@ -61,9 +61,9 @@ class Position {
     //     ',' +
     //     locationData.longitude.toString());
     List<double> meters = getPositionMeters(locationData);
-    // print("Meters " + meters.toString());
+    print("Meters " + meters.toString());
     final double fraction_x = (meters[0] / 911.8 * 2) - 1;
-    final double fraction_y = (meters[1] / 911.8) - 1;
+    final double fraction_y = 1 - (meters[1] / 446.1 * 2);
     return [fraction_x, fraction_y];
   }
 }
