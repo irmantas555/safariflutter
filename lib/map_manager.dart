@@ -25,11 +25,9 @@ class _MapManagerState extends State<MapManager> {
   Timer _timer;
   final player = AudioPlayer();
   StreamSubscription subscription;
+  Clock clock = Clock();
 
   void infoTrack() async {
-    // int result = await player.play("assets/audio/deer.mp3", isLocal: true);
-    // int result = await player.play(
-    //     "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3");
     var duration = await player.setAsset('assets/audio/deer.mp3');
     await player.play();
   }
@@ -40,30 +38,32 @@ class _MapManagerState extends State<MapManager> {
 
   @override
   Widget build(BuildContext context) {
+    print("Manager width: " + MediaQuery.of(context).size.width.toString());
+    print("Manager heoght: " + MediaQuery.of(context).size.height.toString());
     return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
       return Container(
         child: Column(
           children: [
-            Expanded(
-              child: Container(
-                  height: MediaQuery.of(context).size.height - 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: const Color(0xff7c94b6),
-                    image: DecorationImage(
-                      colorFilter:
-                          ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
-                      image: AssetImage("assets/pics/safarifinal.jpg"),
-                      fit: BoxFit.contain,
-                    ),
+            Container(
+                height: MediaQuery.of(context).size.height - 120,
+                // width: MediaQuery.of(context).size.width - 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: NeumorphicTheme.baseColor(context),
+                  image: DecorationImage(
+                    colorFilter:
+                        ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
+                    image: AssetImage("assets/pics/MyMapF1.jpg"),
+                    alignment: Alignment.bottomCenter,
+                    fit: BoxFit.fitHeight,
                   ),
-                  child: Stack(
-                    children: [
-                      Align(alignment: Alignment(-1, -1), child: Clock()),
-                      MapNavi(),
-                    ],
-                  )),
-            ),
+                ),
+                child: Stack(
+                  children: [
+                    Align(alignment: Alignment(-1, -1), child: clock),
+                    MapNavi(),
+                  ],
+                )),
             Container(
               height: 110,
               decoration: BoxDecoration(
@@ -127,7 +127,6 @@ class _MapManagerState extends State<MapManager> {
   @override
   void initState() {
     // infoTrack();
-
     super.initState();
   }
 

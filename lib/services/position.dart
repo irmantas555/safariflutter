@@ -19,8 +19,8 @@ class Position {
         (locationData.latitude - ivaziavimas[0]) * latitudeMultiplyer;
     final nearLongShift_Y =
         (locationData.longitude - ivaziavimas[1]) * longitudeMultiplyer;
-    // print("farLatShift_X - tolimas " +
-    //     (locationData.latitude - tolimasKampas[0]).toString());
+    // print("farLatShift_X " + farLatShift_X.toString());
+    // print("farLongShift_Y " + farLongShift_Y.toString());
     // print("farLatShift_X: " + farLatShift_X.toString());
     // print("nearLatShift_X" + nearLatShift_X.toString());
 
@@ -31,7 +31,8 @@ class Position {
     final dirty_X = pow((pow(distFromEntrance, 2) - pow(dirty_Y, 2)), .5);
     final correction_X = dirty_Y * 0.3583;
     final shift_X_meters = dirty_X + correction_X;
-    final shift_Y_meters = dirty_Y + shift_X_meters * 0.05;
+    // final shift_Y_meters = dirty_Y + shift_X_meters * 0.05;
+    final shift_Y_meters = dirty_Y;
     return [shift_X_meters, shift_Y_meters];
   }
 
@@ -61,9 +62,30 @@ class Position {
     //     ',' +
     //     locationData.longitude.toString());
     List<double> meters = getPositionMeters(locationData);
-    print("Meters " + meters.toString());
+    // print("Meters " + meters.toString());
     final double fraction_x = (meters[0] / 911.8 * 2) - 1;
     final double fraction_y = 1 - (meters[1] / 446.1 * 2);
     return [fraction_x, fraction_y];
+  }
+
+  static List<double> getRelativePositionForPositioned(
+      LocationData data, double width, double height, double iconHeight) {
+    List<double> meters = getPositionMeters(data);
+    final imageWidth = height * 2.113;
+    final leftOffsetPx = (width - imageWidth) / 2 + .0131 * imageWidth;
+    final rightOffsetPx = (width - imageWidth) / 2 + .0131 * imageWidth;
+    final bottomOffsetPx = .01617 * height;
+    final topOffsetPx = .057737 * height;
+
+    // print("Meters " + meters.toString());
+
+    final positionPxX =
+        meters[0] / 911.8 * (width - leftOffsetPx - rightOffsetPx) +
+            rightOffsetPx;
+    final positionPxY =
+        meters[1] / 446.1 * (height - bottomOffsetPx - topOffsetPx) +
+            bottomOffsetPx +
+            iconHeight / 2;
+    return [positionPxX, positionPxY];
   }
 }

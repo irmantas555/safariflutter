@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:safari_one/models/clockProvider.dart';
 
 class Clock extends StatefulWidget {
   @override
@@ -9,32 +11,32 @@ class Clock extends StatefulWidget {
 }
 
 class _ClockState extends State<Clock> {
-  format(Duration d) =>
-      (Duration(minutes: 5) - d).toString().split('.').first.padLeft(8, "0");
-  String whatsleft = "";
-  Duration passed = Duration(seconds: 0);
-  Timer _timer;
+  // format(Duration d) =>
+  //     (Duration(minutes: 5) - d).toString().split('.').first.padLeft(8, "0");
+  // String whatsleft = "";
+  // Duration passed = Duration(seconds: 0);
+  // static Timer _timer;
 
   @override
   void initState() {
-    _startTimer();
     super.initState();
   }
 
-  void _startTimer() {
-    this._timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (mounted) {
-        setState(() {
-          passed += Duration(seconds: 1);
-        });
-        whatsleft = format(passed);
-        // print(passed.inMilliseconds);
-      }
-    });
-  }
+  // void _startTimer() {
+  //   _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     if (mounted) {
+  //       setState(() {
+  //         passed += Duration(seconds: 1);
+  //       });
+  //       whatsleft = format(passed);
+  //       // print(passed.inMilliseconds);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // return Consumer<ClockProvider>(builder: (context, clockprovider, _) {
     return Container(
       margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
       width: 250,
@@ -56,7 +58,7 @@ class _ClockState extends State<Clock> {
       ),
       child: Center(
         child: Text(
-          whatsleft,
+          context.watch<ClockProvider>().whatsleft,
           style: TextStyle(
               color: Color(0xff757575),
               decoration: TextDecoration.none,
@@ -64,6 +66,7 @@ class _ClockState extends State<Clock> {
         ),
       ),
     );
+    // });
   }
 
   // @override

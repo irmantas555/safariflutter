@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/models/animals.dart';
+import 'package:safari_one/widgets/clock.dart';
 
 class AnimalDetail extends StatefulWidget {
   final int id;
@@ -149,6 +150,7 @@ class _AnimalDetailState extends State<AnimalDetail> {
               ),
             ],
           ),
+          Align(alignment: Alignment(-1, -1), child: Clock()),
         ]),
       );
     });

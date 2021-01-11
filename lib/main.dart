@@ -6,6 +6,7 @@ import 'package:safari_one/Pages/homepage.dart';
 import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:safari_one/models/clockProvider.dart';
 import 'package:safari_one/services/NoAnimPageRoute.dart';
 import 'package:flutter/services.dart';
 
@@ -24,9 +25,16 @@ class MyApp extends StatelessWidget {
   Color get baseColor => _baseColor;
   @override
   Widget build(BuildContext context) {
-    return FutureProvider(
-      create: (_) async => AnimalsProvider(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        FutureProvider(
+          create: (_) async => AnimalsProvider(),
+          lazy: false,
+        ),
+        ListenableProvider(
+          create: (_) => ClockProvider(),
+        ),
+      ],
       child: NeumorphicApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

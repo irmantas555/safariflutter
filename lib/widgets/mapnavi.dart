@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:safari_one/services/loc.dart';
 import 'package:safari_one/services/location.dart';
 import 'package:safari_one/services/position.dart';
+import 'package:safari_one/widgets/clock.dart';
 
 class MapNavi extends StatefulWidget {
   @override
@@ -23,8 +24,11 @@ class _MapNaviState extends State<MapNavi> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height - 120;
+    var width = MediaQuery.of(context).size.width;
+    const iconHeight = 40.0;
     return StreamBuilder<LocationData>(
-        stream: Loc(Duration(seconds: 5)).stream,
+        stream: Loc(Duration(seconds: 3)).stream,
         builder: (context, AsyncSnapshot<LocationData> snapshot) {
           if (!snapshot.hasData) {
             return Align(
@@ -36,14 +40,17 @@ class _MapNaviState extends State<MapNavi> {
               ),
             );
           } else {
-            List<double> positions =
-                Position.getRelativePositionForAlign(snapshot.data);
-            print(positions);
-            return Align(
-              alignment: Alignment(positions[0], positions[1]),
+            List<double> positions = Position.getRelativePositionForPositioned(
+                snapshot.data, width, height, iconHeight);
+            // print(positions);
+            return Positioned(
+              // alignment: Alignment(positions[0], positions[1]),
+              // alignment: Alignment(-.975, -1),
+              left: positions[0],
+              bottom: positions[1],
               child: Icon(
                 Icons.not_listed_location,
-                size: 40,
+                size: iconHeight,
                 color: NeumorphicTheme.accentColor(context),
               ),
             );
@@ -76,7 +83,7 @@ class _MapNaviState extends State<MapNavi> {
 
   @override
   void dispose() {
-    subscription.cancel();
+    // subscription.cancel();
     super.dispose();
   }
 }
