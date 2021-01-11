@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:async';
 
-class ClockProvider extends ChangeNotifier {
-  int _timeLimit;
-  int _timeFinishes;
-  bool _timeAlmostOver;
-  bool _timeOver;
-  String _whatsleft;
-  Duration passed = Duration(seconds: 0);
-  bool _idle = true;
-  Timer _timer;
+class ClockProvider {
+  static int _timeLimit;
+  static int _timeFinishes;
+  static bool _timeAlmostOver;
+  static bool _timeOver;
+  static String _whatsleft;
+  static Duration passed = Duration(seconds: 0);
+  static bool _idle = true;
+  static Timer _timer;
 
   ClockProvider() {
     if (_idle == true) {
@@ -19,42 +19,45 @@ class ClockProvider extends ChangeNotifier {
       _idle = false;
       _timeAlmostOver = false;
       _timeOver = false;
-      _timeLimit = 5;
+      _timeLimit = 2;
       _whatsleft = '00:0' + _timeLimit.toString() + ':00';
       _timeFinishes = 1;
     }
   }
 
-  String get whatsleft => _whatsleft;
+  static String get whatsleft => _whatsleft;
 
-  bool get idle => _idle;
+  static bool get idle => _idle;
 
-  bool get timeAlmostOver => _timeAlmostOver;
+  static bool get timeAlmostOver => _timeAlmostOver;
 
-  bool get timeOver => _timeOver;
+  static bool get timeOver => _timeOver;
 
-  int get timeLimit => _timeLimit;
+  static int get timeLimit => _timeLimit;
 
-  void _startTimer() {
+  static int get timeFinishes => _timeFinishes;
+
+  static void _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       passed += Duration(seconds: 1);
       _whatsleft = format(passed);
-      if (passed.inSeconds.abs() > timeLimit - _timeFinishes) {
+      if (passed.inMinutes.abs() > timeLimit - timeFinishes - 1) {
         _timeAlmostOver = true;
       }
-      if (passed.inSeconds.abs() > timeLimit) {
+      // if (passed.inMinutes.abs() > timeLimit - 1) {
+      if (passed.inSeconds.abs() > 5) {
         _timeOver = true;
       }
+      // print(passed.inSeconds.toString());
       _idle = false;
-      notifyListeners();
     });
   }
 
-  void start() {
+  static void start() {
     _startTimer();
   }
 
-  void stop() {
+  static void stop() {
     _timer.cancel();
     passed = Duration(seconds: 0);
     _whatsleft = '00:05:00';
@@ -62,6 +65,11 @@ class ClockProvider extends ChangeNotifier {
     _timeAlmostOver = false;
   }
 
-  format(Duration d) =>
-      (Duration(minutes: 5) - d).toString().split('.').first.padLeft(8, "0");
+
+
+  static format(Duration d) => (Duration(minutes: _timeLimit) - d)
+      .toString()
+      .split('.')
+      .first
+      .padLeft(8, "0");
 }

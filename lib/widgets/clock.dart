@@ -11,24 +11,25 @@ class Clock extends StatefulWidget {
 }
 
 class _ClockState extends State<Clock> {
-  bool so = true;
-
   @override
   void initState() {
-    if (context.read<ClockProvider>().idle == true) {
-      print("checked");
-      context.read<ClockProvider>().start();
-    }
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (null == ClockProvider.idle || ClockProvider.idle == true) {
+        print("starting clock provider");
+        ClockProvider();
+        ClockProvider.start();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (context.watch<ClockProvider>().timeOver) {
-      Navigator.pushReplacementNamed(context, "/goodBye");
+    if (ClockProvider.timeOver == true) {
+      Future.microtask(
+          () => Navigator.pushReplacementNamed(context, "/goodBye"));
     }
     return GestureDetector(
-      onLongPress: () => context.read<ClockProvider>().stop(),
+      onLongPress: () => ClockProvider.stop(),
       child: Container(
         margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
         width: 250,
@@ -36,7 +37,7 @@ class _ClockState extends State<Clock> {
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: context.watch<ClockProvider>().timeAlmostOver == true
+          color: ClockProvider.timeAlmostOver == true
               ? Colors.pink
               : Colors.white.withOpacity(.8),
           boxShadow: [
@@ -51,13 +52,19 @@ class _ClockState extends State<Clock> {
           ],
         ),
         child: Center(
-          child: Text(
-            context.watch<ClockProvider>().whatsleft,
-            style: TextStyle(
-                color: Color(0xff757575),
-                decoration: TextDecoration.none,
-                fontFamily: "nunitor"),
-          ),
+          child: StreamBuilder<String>(
+              stream: Stream.periodic(Duration(seconds: 1), (x) => x)
+                  .map((v) => ClockProvider.whatsleft),
+              builder: (context, snapshot) {
+                return Text(
+                  // "sdfg",
+                  snapshot.hasData ? snapshot.data : ClockProvider.whatsleft == null? "00:00:00",
+                  style: TextStyle(
+                      color: Color(0xff757575),
+                      decoration: TextDecoration.none,
+                      fontFamily: "nunitor"),
+                );
+              }),
         ),
       ),
     );
@@ -65,7 +72,7 @@ class _ClockState extends State<Clock> {
 
 // @override
 // void dispose() {
-//   _stopTimer();
-//   super.dispose();
+//   // super.dispose();
+//   ClockProvider.stop();
 // }
 }

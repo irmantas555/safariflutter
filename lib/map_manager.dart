@@ -10,6 +10,8 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/widgets/clock.dart';
 import 'package:safari_one/widgets/mapnavi.dart';
 
+import 'models/clockProvider.dart';
+
 class MapManager extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -18,14 +20,7 @@ class MapManager extends StatefulWidget {
 }
 
 class _MapManagerState extends State<MapManager> {
-  format(Duration d) =>
-      (Duration(minutes: 5) - d).toString().split('.').first.padLeft(8, "0");
-  String whatsleft = "";
-  Duration passed = Duration(seconds: 0);
-  Timer _timer;
   final player = AudioPlayer();
-  StreamSubscription subscription;
-  Clock clock = Clock();
 
   void infoTrack() async {
     var duration = await player.setAsset('assets/audio/deer.mp3');
@@ -58,7 +53,7 @@ class _MapManagerState extends State<MapManager> {
                 ),
                 child: Stack(
                   children: [
-                    Align(alignment: Alignment(-1, -1), child: clock),
+                    Align(alignment: Alignment(-1, -1), child: Clock()),
                     MapNavi(),
                   ],
                 )),
@@ -122,15 +117,15 @@ class _MapManagerState extends State<MapManager> {
     });
   }
 
-  @override
-  void initState() {
-    // infoTrack();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // infoTrack();
+  //   super.initState();
+  // }
 
-  @override
-  void dispose() {
-    _palyerStop();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   // _palyerStop();
+  //   // super.dispose();
+  // }
 }

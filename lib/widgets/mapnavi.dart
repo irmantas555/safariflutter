@@ -14,13 +14,23 @@ class MapNavi extends StatefulWidget {
   State<StatefulWidget> createState() => _MapNaviState();
 }
 
-class _MapNaviState extends State<MapNavi> {
+class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
   StreamSubscription subscription;
-  // @override
-  // void initState() {
-  //   getLocation().listen((event) {});
-  //   super.initState();
-  // }
+
+  AnimationController _animationController;
+  Animation<double> _animation;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    );
+    _animation =
+        Tween<double>(begin: 1, end: 1.4).animate(_animationController);
+    _animationController.forward();
+    _animationController.reverse();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +54,19 @@ class _MapNaviState extends State<MapNavi> {
                 snapshot.data, width, height, iconHeight);
             // print(positions);
             return Positioned(
-              // alignment: Alignment(positions[0], positions[1]),
-              // alignment: Alignment(-.975, -1),
-              left: positions[0],
-              bottom: positions[1],
-              child: Icon(
-                Icons.not_listed_location,
-                size: iconHeight,
-                color: NeumorphicTheme.accentColor(context),
-              ),
-            );
+                // alignment: Alignment(positions[0], positions[1]),
+                // alignment: Alignment(-.975, -1),
+                left: positions[0],
+                bottom: positions[1],
+                child: ScaleTransition(
+                  alignment: Alignment.bottomCenter,
+                  scale: _animation,
+                  child: Icon(
+                    Icons.not_listed_location,
+                    size: iconHeight,
+                    color: NeumorphicTheme.accentColor(context),
+                  ),
+                ));
           }
         });
     // );

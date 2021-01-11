@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/animaldetail.dart';
+import 'package:safari_one/Pages/closingscreen.dart';
 import 'package:safari_one/Pages/homepage.dart';
 import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
@@ -21,6 +22,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Color _baseColor = Color(0xaaeeeeee);
+  ObjectKey listen;
 
   Color get baseColor => _baseColor;
   @override
@@ -31,9 +33,10 @@ class MyApp extends StatelessWidget {
           create: (_) async => AnimalsProvider(),
           lazy: false,
         ),
-        ListenableProvider(
-          create: (_) => ClockProvider(),
-        ),
+        // ListenableProvider(
+        //   key: listen,
+        //   create: (_) => ClockProvider(),
+        // ),
       ],
       child: NeumorphicApp(
           debugShowCheckedModeBanner: false,
@@ -53,6 +56,7 @@ class MyApp extends StatelessWidget {
           routes: {
             "/": (context) => HomePage(),
             "/mapman": (context) => MapManager(),
+            "/goodBye": (context) => ClosingScreen(),
           },
           onGenerateRoute: (RouteSettings values) {
             String index = values.name.split("/")[2];
@@ -64,13 +68,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// PREVIOUS HOME WITHOUT NAVIGATION
-// home: Scaffold(
-// appBar: AppBar(
-// centerTitle: true,
-// backgroundColor: Color(0xFF441A39),
-// title: Text("Safari First Test"),
-// ),
-// body: MapManager(),
-// ),
