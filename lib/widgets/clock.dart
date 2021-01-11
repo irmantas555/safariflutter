@@ -24,7 +24,7 @@ class _ClockState extends State<Clock> {
 
   @override
   Widget build(BuildContext context) {
-    if ( context.watch<ClockProvider>().timeOver){
+    if (context.watch<ClockProvider>().timeOver) {
       Navigator.pushReplacementNamed(context, "/goodBye");
     }
     return GestureDetector(
