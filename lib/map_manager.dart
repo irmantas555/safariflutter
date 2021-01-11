@@ -38,8 +38,6 @@ class _MapManagerState extends State<MapManager> {
 
   @override
   Widget build(BuildContext context) {
-    print("Manager width: " + MediaQuery.of(context).size.width.toString());
-    print("Manager heoght: " + MediaQuery.of(context).size.height.toString());
     return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
       return Container(
         child: Column(
