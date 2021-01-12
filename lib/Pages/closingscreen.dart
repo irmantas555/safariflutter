@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:safari_one/models/clockProvider.dart';
 import 'package:safari_one/widgets/clock.dart';
 
 class ClosingScreen extends StatelessWidget {
@@ -15,7 +16,12 @@ class ClosingScreen extends StatelessWidget {
         child: Column(
           children: [
             Spacer(
-              flex: 10,
+              flex: 5,
+            ),
+            GestureDetector(
+                onLongPress: () => ClockProvider().stop(), child: Clock()),
+            Spacer(
+              flex: 5,
             ),
             ConstrainedBox(
               constraints: BoxConstraints.loose(Size(
@@ -39,7 +45,7 @@ class ClosingScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Spacer()
+            Spacer(),
           ],
         ),
       ),

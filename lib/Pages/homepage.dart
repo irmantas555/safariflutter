@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:safari_one/models/clockProvider.dart';
 import 'package:safari_one/models/timer.dart';
 
 class HomePage extends StatelessWidget {
@@ -31,7 +32,8 @@ class HomePage extends StatelessWidget {
             NeumorphicButton(
               margin: EdgeInsets.only(top: 20),
               onPressed: () {
-                print(Navigator.pushNamed(context, '/mapman'));
+                ClockProvider.unpause(2, 1);
+                Navigator.pushReplacementNamed(context, '/route');
               },
               style: NeumorphicStyle(
                 shape: NeumorphicShape.flat,

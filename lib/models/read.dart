@@ -24,7 +24,7 @@ class Read {
       return animals;
     } catch (e) {
       // If encountering an error, return 0
-      print("Error occoured");
+      // print("Error occoured");
       return null;
     }
   }

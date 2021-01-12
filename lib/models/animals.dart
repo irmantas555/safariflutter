@@ -8,14 +8,19 @@ import 'package:safari_one/models/animal.dart';
 
 class AnimalsProvider extends ChangeNotifier {
   static final List<Animal> _animalsList = [];
+  Animal activeAnimal;
+  int activeAnimalIndex;
 
   AnimalsProvider() {
-    readAnimals().then((value) => postProcess(value));
+    readAnimals().then((value) => postProcess(value)).then((value) => {
+          activeAnimalIndex = 0,
+          activeAnimal = _animalsList[0],
+        });
   }
 
   void postProcess(List<Animal> animals) {
     _animalsList.addAll(animals);
-    print("So much animals: " + _animalsList.length.toString());
+    // print("So much animals: " + _animalsList.length.toString());
     notifyListeners();
     // print("Privider initialized");
   }
@@ -25,6 +30,39 @@ class AnimalsProvider extends ChangeNotifier {
 
   void addAll(Iterable<Animal> animalist) {
     _animalsList.addAll(animalist);
+  }
+
+  void setCurrent(int index) {
+    if (_animalsList.length > 0) {
+      activeAnimalIndex = index;
+      activeAnimal = _animalsList[index];
+    }
+  }
+
+  void next() {
+    if (_animalsList.length > 0) {
+      print("list lenght" +
+          _animalsList.length.toString() +
+          "index" +
+          activeAnimalIndex.toString());
+      if (_animalsList.length > activeAnimalIndex + 1) {
+        print("next2 pressed");
+        activeAnimalIndex = activeAnimalIndex + 1;
+        activeAnimal = _animalsList[activeAnimalIndex];
+        print("active animal" + activeAnimal.name);
+        notifyListeners();
+      }
+    }
+  }
+
+  void previous() {
+    print("prev pressed");
+    if (activeAnimalIndex - 1 > 0) {
+      activeAnimalIndex = activeAnimalIndex - 1;
+      activeAnimal = _animalsList[activeAnimalIndex];
+      print("active animal" + activeAnimal.name);
+      notifyListeners();
+    }
   }
 
   void add(Animal animal) {
@@ -64,8 +102,9 @@ class AnimalsProvider extends ChangeNotifier {
       List<Animal> animals =
           animalsJson.map((anmJson) => Animal.fromJson(anmJson)).toList();
       animals.forEach((element) {
-        print(element.name);
+        // print(element.name);
       });
+      if (animals.length > 0) {}
       return animals;
     } catch (e) {
       // If encountering an error, return 0

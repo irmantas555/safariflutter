@@ -1,75 +1,103 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 
-class ClockProvider {
-  static int _timeLimit;
-  static int _timeFinishes;
-  static bool _timeAlmostOver;
-  static bool _timeOver;
-  static String _whatsleft;
-  static Duration passed = Duration(seconds: 0);
-  static bool _idle = true;
+class ClockProvider extends ChangeNotifier {
+  static final _cloockporvider = ClockProvider._internal();
+  int _timeLimit;
+  int _timeFinishes;
+  bool _timeAlmostOver;
+  bool _timeOver;
+  bool _paused;
+  String _whatsleft;
+  Duration _passed;
+  bool _idle = true;
   static Timer _timer;
 
-  ClockProvider() {
-    if (_idle == true) {
-      print("Idle : " + idle.toString());
-      _startTimer();
-      _idle = false;
-      _timeAlmostOver = false;
-      _timeOver = false;
-      _timeLimit = 2;
-      _whatsleft = '00:0' + _timeLimit.toString() + ':00';
-      _timeFinishes = 1;
+  factory ClockProvider() {
+    print("factory started");
+    return _cloockporvider;
+  }
+
+  ClockProvider._internal() {
+    // print("internal started");
+  }
+
+  String get whatsleft => _whatsleft;
+
+  bool get idle => _idle;
+
+  bool get timeAlmostOver => _timeAlmostOver;
+
+  bool get timeOver => _timeOver;
+
+  Duration get passed => _passed;
+
+  int get timeLimit => _timeLimit;
+
+  int get timeFinishes => _timeFinishes;
+
+  bool get paused => _paused;
+
+  static void unpause(int timelmt, int timeLimitWarningBefore) {
+    _cloockporvider._paused = false;
+    _cloockporvider._passed = Duration(seconds: 0);
+    _cloockporvider._timeLimit = timelmt;
+    _cloockporvider._timeFinishes = timeLimitWarningBefore;
+    _cloockporvider._timeAlmostOver = false;
+    _cloockporvider._whatsleft = '00:0' + timelmt.toString() + ':00';
+    _cloockporvider._idle = false;
+    _cloockporvider._timeOver = false;
+    _cloockporvider._startTimer();
+  }
+
+  void _startTimer() {
+    if (null == _timer || _timer.isActive == false) {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+        startSequence(true);
+      });
+    } else {
+      startSequence(false);
     }
   }
 
-  static String get whatsleft => _whatsleft;
-
-  static bool get idle => _idle;
-
-  static bool get timeAlmostOver => _timeAlmostOver;
-
-  static bool get timeOver => _timeOver;
-
-  static int get timeLimit => _timeLimit;
-
-  static int get timeFinishes => _timeFinishes;
-
-  static void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      passed += Duration(seconds: 1);
-      _whatsleft = format(passed);
-      if (passed.inMinutes.abs() > timeLimit - timeFinishes - 1) {
-        _timeAlmostOver = true;
-      }
-      // if (passed.inMinutes.abs() > timeLimit - 1) {
-      if (passed.inSeconds.abs() > 5) {
-        _timeOver = true;
-      }
-      // print(passed.inSeconds.toString());
-      _idle = false;
-    });
+  void startSequence(bool addDuration) {
+    if (addDuration) {
+      _passed += Duration(seconds: 1);
+    }
+    _whatsleft = format(_passed);
+    if (_passed.inMinutes.abs() >= timeLimit - timeFinishes) {
+      _timeAlmostOver = true;
+    }
+    if (_passed.inMinutes.abs() >= timeLimit) {
+      _timeOver = true;
+    }
+    // print("tick" + _passed.inSeconds.toString());
+    notifyListeners();
   }
 
-  static void start() {
-    _startTimer();
-  }
-
-  static void stop() {
-    _timer.cancel();
-    passed = Duration(seconds: 0);
-    _whatsleft = '00:05:00';
+  void stop() {
+    // print("stop pressed");
+    // _timer.cancel();
     _idle = true;
-    _timeAlmostOver = false;
+    notifyListeners();
   }
 
+  void closing() {
+    _timer.cancel();
+  }
 
+  @override
+  void addListener(VoidCallback listener) {
+    super.addListener(listener);
+    // print(listener.toString());
+  }
 
-  static format(Duration d) => (Duration(minutes: _timeLimit) - d)
-      .toString()
-      .split('.')
-      .first
-      .padLeft(8, "0");
+  static format(Duration d) =>
+      (Duration(minutes: _cloockporvider._timeLimit) - d)
+          .toString()
+          .split('.')
+          .first
+          .padLeft(8, "0");
 }

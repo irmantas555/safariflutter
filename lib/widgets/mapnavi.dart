@@ -75,10 +75,10 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
 
   Future<void> printlocation() async {
     LocationData locationData = await Locate.getLoc();
-    print("Location latitude: " +
-        locationData.latitude.toString() +
-        " longitude " +
-        locationData.longitude.toString());
+    // print("Location latitude: " +
+    //     locationData.latitude.toString() +
+    //     " longitude " +
+    //     locationData.longitude.toString());
   }
 
   // Stream<void> getLocation() async* {

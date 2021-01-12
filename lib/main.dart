@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/animaldetail.dart';
 import 'package:safari_one/Pages/closingscreen.dart';
 import 'package:safari_one/Pages/homepage.dart';
+import 'package:safari_one/Pages/routepage.dart';
 import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -31,12 +32,14 @@ class MyApp extends StatelessWidget {
       providers: [
         FutureProvider(
           create: (_) async => AnimalsProvider(),
+          key: ObjectKey("animal"),
           lazy: false,
         ),
-        // ListenableProvider(
-        //   key: listen,
-        //   create: (_) => ClockProvider(),
-        // ),
+        ListenableProvider(
+          key: listen,
+          dispose: (context, value) => value.dispose(),
+          create: (_) => ClockProvider(),
+        ),
       ],
       child: NeumorphicApp(
           debugShowCheckedModeBanner: false,
@@ -57,10 +60,11 @@ class MyApp extends StatelessWidget {
             "/": (context) => HomePage(),
             "/mapman": (context) => MapManager(),
             "/goodBye": (context) => ClosingScreen(),
+            "/route": (context) => RoutePage(),
           },
           onGenerateRoute: (RouteSettings values) {
             String index = values.name.split("/")[2];
-            print("Index: $index");
+            // print("Index: $index");
             return NoAnimationMaterialPageRoute(
                 builder: (BuildContext conext) =>
                     AnimalDetail(int.parse(index)));

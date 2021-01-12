@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:safari_one/Pages/animaldetail.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -74,10 +75,11 @@ class _MapManagerState extends State<MapManager> {
                 },
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      "/animal/" + index.toString(),
-                    ),
+                    onTap: () => {
+                      () => AnimalsProvider,
+                      Navigator.pushReplacementNamed(
+                          context, "/animal/" + index.toString())
+                    },
                     child: Container(
                       height: 100,
                       width: 100,

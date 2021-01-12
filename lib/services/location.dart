@@ -29,7 +29,7 @@ class Locate {
 
   static Stream<LocationData> getLocStream(Duration intreval) async* {
     Location location = new Location();
-    print('Location Function running');
+    // print('Location Function running');
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
     LocationData _locationData;
