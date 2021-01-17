@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/routepage.dart';
-import 'package:safari_one/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:safari_one/models/clockProvider.dart';
 import 'package:safari_one/widgets/clock.dart';
-
-import 'closingscreen.dart';
 
 class AnimalDetail extends StatefulWidget {
   final int id;
@@ -23,11 +20,8 @@ class AnimalDetail extends StatefulWidget {
 
 class _AnimalDetailState extends State<AnimalDetail> {
   bool moved = false;
-
   @override
   Widget build(BuildContext context) {
-    final mediaWidth = MediaQuery.of(context).size.width;
-    final mediaHeight = MediaQuery.of(context).size.height;
     if (!context.watch<ClockProvider>().timeOver) {
       return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
         return Container(
@@ -96,14 +90,16 @@ class _AnimalDetailState extends State<AnimalDetail> {
                       shape: CircleBorder(),
                       elevation: 3,
                       color: Colors.white,
-                      onPressed: () => {
-                        if (amimalsprovider.activeAnimalIndex != widget.id &&
-                            !moved)
-                          {
-                            amimalsprovider.setCurrent(widget.id),
-                            moved = true,
-                          },
-                        amimalsprovider.previous()
+                      onPressed: () {
+                        if (!moved) {
+                          amimalsprovider.setCurrent(widget.id);
+                          moved = true;
+                        }
+                        amimalsprovider.previous();
+                        return Navigator.pushReplacementNamed(
+                            context,
+                            "/animal/" +
+                                (amimalsprovider.activeAnimalIndex).toString());
                       },
                       child: Icon(
                         Icons.navigate_before,
@@ -116,14 +112,16 @@ class _AnimalDetailState extends State<AnimalDetail> {
                       shape: CircleBorder(),
                       elevation: 3,
                       color: Colors.white,
-                      onPressed: () => {
-                        if (amimalsprovider.activeAnimalIndex != widget.id &&
-                            !moved)
-                          {
-                            amimalsprovider.setCurrent(widget.id),
-                            moved = true,
-                          },
-                        amimalsprovider.next()
+                      onPressed: () {
+                        if (!moved) {
+                          amimalsprovider.setCurrent(widget.id);
+                          moved = true;
+                        }
+                        amimalsprovider.next();
+                        return Navigator.pushReplacementNamed(
+                            context,
+                            "/animal/" +
+                                (amimalsprovider.activeAnimalIndex).toString());
                       },
                       child: Icon(
                         Icons.navigate_next,
@@ -136,7 +134,8 @@ class _AnimalDetailState extends State<AnimalDetail> {
                         shape: CircleBorder(),
                         elevation: 8,
                         color: Colors.white,
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                            context, "/route", ModalRoute.withName("/")),
                         child: Icon(
                           Icons.close_rounded,
                           color: NeumorphicTheme.accentColor(context),

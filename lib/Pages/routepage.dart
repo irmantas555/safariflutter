@@ -3,9 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/closingscreen.dart';
 import 'package:safari_one/Pages/homepage.dart';
-import 'package:safari_one/map_manager.dart';
+import 'package:safari_one/Pages/map_manager.dart';
 import 'package:safari_one/models/clockProvider.dart';
-import 'package:tuple/tuple.dart';
 
 class RoutePage extends StatefulWidget {
   @override

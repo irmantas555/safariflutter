@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'dart:async';
 
 class ClockProvider extends ChangeNotifier {
@@ -16,7 +15,6 @@ class ClockProvider extends ChangeNotifier {
   static Timer _timer;
 
   factory ClockProvider() {
-    print("factory started");
     return _cloockporvider;
   }
 

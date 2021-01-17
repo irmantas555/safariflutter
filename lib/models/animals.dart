@@ -41,27 +41,17 @@ class AnimalsProvider extends ChangeNotifier {
 
   void next() {
     if (_animalsList.length > 0) {
-      print("list lenght" +
-          _animalsList.length.toString() +
-          "index" +
-          activeAnimalIndex.toString());
       if (_animalsList.length > activeAnimalIndex + 1) {
-        print("next2 pressed");
         activeAnimalIndex = activeAnimalIndex + 1;
         activeAnimal = _animalsList[activeAnimalIndex];
-        print("active animal" + activeAnimal.name);
-        notifyListeners();
       }
     }
   }
 
   void previous() {
-    print("prev pressed");
     if (activeAnimalIndex - 1 > 0) {
       activeAnimalIndex = activeAnimalIndex - 1;
       activeAnimal = _animalsList[activeAnimalIndex];
-      print("active animal" + activeAnimal.name);
-      notifyListeners();
     }
   }
 

@@ -1,17 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:safari_one/Pages/animaldetail.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/widgets/clock.dart';
 import 'package:safari_one/widgets/mapnavi.dart';
-
-import 'models/clockProvider.dart';
 
 class MapManager extends StatefulWidget {
   @override
@@ -24,7 +19,7 @@ class _MapManagerState extends State<MapManager> {
   final player = AudioPlayer();
 
   void infoTrack() async {
-    var duration = await player.setAsset('assets/audio/deer.mp3');
+    await player.setAsset('assets/audio/deer.mp3');
     await player.play();
   }
 
@@ -45,9 +40,9 @@ class _MapManagerState extends State<MapManager> {
                   shape: BoxShape.rectangle,
                   color: NeumorphicTheme.baseColor(context),
                   image: DecorationImage(
-                    colorFilter:
-                        ColorFilter.mode(Color(0xaac8b7b7), BlendMode.color),
-                    image: AssetImage("assets/pics/MyMapF1.jpg"),
+                    colorFilter: ColorFilter.mode(
+                        Color(0xaac8b7b7), BlendMode.softLight),
+                    image: AssetImage("assets/pics/safarifinalForUse.jpg"),
                     alignment: Alignment.bottomCenter,
                     fit: BoxFit.fitHeight,
                   ),
@@ -119,15 +114,15 @@ class _MapManagerState extends State<MapManager> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   // infoTrack();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    // infoTrack();
+    super.initState();
+  }
 
-  // @override
-  // void dispose() {
-  //   // _palyerStop();
-  //   // super.dispose();
-  // }
+  @override
+  void dispose() {
+    // _palyerStop();
+    super.dispose();
+  }
 }

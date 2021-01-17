@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:location/location.dart';
 import 'package:safari_one/services/loc.dart';
-import 'package:safari_one/services/location.dart';
 import 'package:safari_one/services/position.dart';
-import 'package:safari_one/widgets/clock.dart';
 
 class MapNavi extends StatefulWidget {
   @override
@@ -30,7 +28,10 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
         Tween<double>(begin: 1, end: 1.4).animate(_animationController);
     _animationController.forward();
     _animationController.reverse();
+    super.initState();
   }
+
+  Stream mystream = Loc(Duration(seconds: 3)).stream;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
     var width = MediaQuery.of(context).size.width;
     const iconHeight = 40.0;
     return StreamBuilder<LocationData>(
-        stream: Loc(Duration(seconds: 3)).stream,
+        stream: mystream,
         builder: (context, AsyncSnapshot<LocationData> snapshot) {
           if (!snapshot.hasData) {
             return Align(
@@ -50,7 +51,7 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
               ),
             );
           } else {
-            List<double> positions = Position.getRelativePositionForPositioned(
+            List<double> positions = Position.getRelativePositionForInclined(
                 snapshot.data, width, height, iconHeight);
             // print(positions);
             return Positioned(
@@ -72,27 +73,6 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
     // );
     // );
   }
-
-  Future<void> printlocation() async {
-    LocationData locationData = await Locate.getLoc();
-    // print("Location latitude: " +
-    //     locationData.latitude.toString() +
-    //     " longitude " +
-    //     locationData.longitude.toString());
-  }
-
-  // Stream<void> getLocation() async* {
-  //   subscription = Loc(Duration(seconds: 5))
-  //       .stream
-  //       .map((locdata) =>
-  //           "longitude: " +
-  //           locdata.longitude.toString() +
-  //           "longitude: " +
-  //           locdata.latitude.toString())
-  //       .listen(
-  //         (event) => print(event),
-  //       );
-  // }
 
   @override
   void dispose() {

@@ -5,7 +5,7 @@ import 'package:safari_one/Pages/animaldetail.dart';
 import 'package:safari_one/Pages/closingscreen.dart';
 import 'package:safari_one/Pages/homepage.dart';
 import 'package:safari_one/Pages/routepage.dart';
-import 'package:safari_one/map_manager.dart';
+import 'package:safari_one/Pages/map_manager.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/models/clockProvider.dart';
@@ -23,7 +23,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Color _baseColor = Color(0xaaeeeeee);
-  ObjectKey listen;
 
   Color get baseColor => _baseColor;
   @override
@@ -36,7 +35,6 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
         ListenableProvider(
-          key: listen,
           dispose: (context, value) => value.dispose(),
           create: (_) => ClockProvider(),
         ),

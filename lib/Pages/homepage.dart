@@ -2,13 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:safari_one/models/clockProvider.dart';
-import 'package:safari_one/models/timer.dart';
 
 class HomePage extends StatelessWidget {
-  final Color _tapColor = Colors.pinkAccent;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,14 +51,5 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Color _iconsColor(BuildContext context) {
-    final theme = NeumorphicTheme.of(context);
-    if (theme.isUsingDark) {
-      return theme.current.accentColor;
-    } else {
-      return null;
-    }
   }
 }

@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'dart:math';
 
@@ -21,19 +18,18 @@ class Position {
         (locationData.longitude - ivaziavimas[1]) * longitudeMultiplyer;
     // print("farLatShift_X " + farLatShift_X.toString());
     // print("farLongShift_Y " + farLongShift_Y.toString());
-    // print("farLatShift_X: " + farLatShift_X.toString());
-    // print("nearLatShift_X" + nearLatShift_X.toString());
+    // print("nearLatShift_X: " + nearLatShift_X.toString());
+    // print("nearLongShift_Y" + nearLongShift_Y.toString());
 
-    final dirty_Y =
-        0.5173625 * farLatShift_X - 0.855778 * farLongShift_Y + 447.6036;
-    final distFromEntrance =
-        pow((pow(nearLatShift_X, 2) + pow(nearLongShift_Y, 2)), .5);
-    final dirty_X = pow((pow(distFromEntrance, 2) - pow(dirty_Y, 2)), .5);
-    final correction_X = dirty_Y * 0.3583;
-    final shift_X_meters = dirty_X + correction_X;
-    // final shift_Y_meters = dirty_Y + shift_X_meters * 0.05;
+    final dirty_Y = (farLongShift_Y * tan(0.543766) + farLatShift_X + 865.164) *
+            sin(0.543766) -
+        farLongShift_Y / cos(0.543766);
+    final dirty_X = (farLongShift_Y * tan(0.543766) + farLatShift_X + 865.164) *
+            cos(0.543766) -
+        896.045;
+
     final shift_Y_meters = dirty_Y;
-    return [shift_X_meters, shift_Y_meters];
+    return [dirty_X, dirty_Y];
   }
 
   static List<double> getRelativePosition(
@@ -87,5 +83,69 @@ class Position {
             bottomOffsetPx +
             iconHeight / 2;
     return [positionPxX, positionPxY];
+  }
+
+  static List<double> getRelativePositionForAligned(LocationData locationData) {
+    //margins values should be x-left, x-right, width, y-bottom, y-top, height
+    // print(locationData.latitude.toString() +
+    //     ',' +
+    //     locationData.longitude.toString());
+    List<double> meters = getPositionMeters(locationData);
+    // print("Meters " + meters.toString());
+    final double fraction_x = (meters[0] / 911.8 * 2) - 1;
+    final double fraction_y = 1 - (meters[1] / 446.1 * 2);
+    return [fraction_x, fraction_y];
+  }
+
+  static List<double> getRelativePositionForInclined(
+      LocationData data, double width, double height, double iconHeight) {
+    List<double> meters = getPositionMeters(data);
+    final imageWidth = height * 1.8461;
+    print("Meters " + meters.toString());
+    print("width, height " + width.toString() + ", " + height.toString());
+
+    final tanBeta1 = 573.32 / (meters[1] + 250);
+    // print("tanBeta1 " + tanBeta1.toString());
+    final beta1rad = atan(tanBeta1);
+    // print("beta1rad " + beta1rad.toString());
+    final beta2rad = 0.7830165744 - beta1rad;
+    // print("beta2rad " + beta2rad.toString());
+
+    final projectionY = meters[1] * sin(beta1rad) / cos(beta2rad);
+    // print("projectionY " + projectionY.toString());
+
+    final XdistanceFrom500 = 500 - meters[0];
+    final shortcutX = 625.65 + (295 / 447.6) * meters[1];
+    final projectionFrom400X = 626.65 / shortcutX * XdistanceFrom500;
+    final projectionX = 500 - projectionFrom400X;
+    print("projectionX, projectionY " +
+        projectionX.toString() +
+        ", " +
+        projectionY.toString());
+    final newAngleRad = atan(projectionY / projectionX) + 0.109011345;
+    final diagonal = pow((pow(projectionX, 2) + pow(projectionY, 2)), .5);
+    print("new angele degr, diagonal  " +
+        newAngleRad.toString() +
+        ", " +
+        diagonal.toString());
+
+    final rotationProjectionX = diagonal * cos(newAngleRad);
+    final rotationProjectionY = diagonal * sin(newAngleRad);
+    print("rotationProjectionY " + rotationProjectionY.toString());
+    print("rotationProjectionX " + rotationProjectionX.toString());
+
+    final leftOffset = width * 0.003645833333;
+    final bottomOffset = height * 0.1644230769;
+
+    final positionX = 0.925 * rotationProjectionX / 911.8 * width + leftOffset;
+    final positionY = 0.6375 * rotationProjectionY / 446.1 * height +
+        iconHeight / 2 +
+        bottomOffset;
+    print("positionX, positionY " +
+        positionX.toString() +
+        ", " +
+        positionY.toString());
+
+    return [positionX, positionY];
   }
 }
