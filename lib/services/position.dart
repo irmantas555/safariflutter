@@ -99,7 +99,8 @@ class Position {
 
   static List<double> getRelativePositionForInclined(
       LocationData data, double width, double height, double iconHeight) {
-    List<double> meters = getPositionMeters(data);
+//    List<double> meters = getPositionMeters(data);
+    List<double> meters = [817.036514111347, 388.796994666771];
     final imageWidth = height * 1.8461;
     print("Meters " + meters.toString());
     print("width, height " + width.toString() + ", " + height.toString());
@@ -134,11 +135,11 @@ class Position {
     print("rotationProjectionY " + rotationProjectionY.toString());
     print("rotationProjectionX " + rotationProjectionX.toString());
 
-    final leftOffset = width * 0.003645833333;
+    final leftOffset = imageWidth * 0.003645833333;
     final bottomOffset = height * 0.1644230769;
 
-    final positionX = 0.925 * rotationProjectionX / 911.8 * width + leftOffset;
-    final positionY = 0.6375 * rotationProjectionY / 446.1 * height +
+    final positionX = 0.925 * rotationProjectionX / 911.8 * imageWidth + leftOffset;
+    final positionY = 0.61 * rotationProjectionY / 446.1 * height +
         iconHeight / 2 +
         bottomOffset;
     print("positionX, positionY " +
