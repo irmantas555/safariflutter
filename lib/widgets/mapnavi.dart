@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:location/location.dart';
+import 'package:safari_one/services/geolocation.dart';
 import 'package:safari_one/services/loc.dart';
 import 'package:safari_one/services/position.dart';
 
@@ -17,27 +19,29 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
 
   AnimationController _animationController;
   Animation<double> _animation;
+  final random = Random();
+  double iconHeight = 30.0;
+  GeoLoc geoLoc;
 
   @override
   void initState() {
+    super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 1),
       vsync: this,
     );
     _animation =
-        Tween<double>(begin: 1, end: 1.4).animate(_animationController);
+        Tween<double>(begin: 50.0, end: 30.0).animate(_animationController);
     _animationController.forward();
-    _animationController.reverse();
-    super.initState();
+    geoLoc = GeoLoc();
   }
 
-  Stream mystream = Loc(Duration(seconds: 3)).stream;
+  Stream mystream = geoLoc.getgeoloc(Duration(seconds: 3));
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height - 120;
     var width = MediaQuery.of(context).size.width;
-    const iconHeight = 40.0;
     return StreamBuilder<LocationData>(
         stream: mystream,
         builder: (context, AsyncSnapshot<LocationData> snapshot) {
@@ -45,9 +49,9 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
             return Align(
               alignment: Alignment(0, 0),
               child: Icon(
-                Icons.not_listed_location,
-                size: 40,
-                color: NeumorphicTheme.accentColor(context),
+                Icons.airport_shuttle_outlined,
+                size: _animation.value,
+                color: Colors.pink,
               ),
             );
           } else {
@@ -59,14 +63,10 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
                 // alignment: Alignment(-.975, -1),
                 left: positions[0],
                 bottom: positions[1],
-                child: ScaleTransition(
-                  alignment: Alignment.bottomCenter,
-                  scale: _animation,
-                  child: Icon(
-                    Icons.not_listed_location,
-                    size: iconHeight,
-                    color: NeumorphicTheme.accentColor(context),
-                  ),
+                child: Icon(
+                  Icons.airport_shuttle_outlined,
+                  size: iconHeight,
+                  color: Colors.pink,
                 ));
           }
         });
@@ -78,5 +78,6 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
   void dispose() {
     // subscription.cancel();
     super.dispose();
+    _animationController.dispose();
   }
 }

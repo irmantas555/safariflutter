@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:safari_one/services/geolocation.dart';
 import 'package:safari_one/widgets/clock.dart';
 import 'package:safari_one/widgets/mapnavi.dart';
 
@@ -49,7 +50,7 @@ class _MapManagerState extends State<MapManager> {
                 ),
                 child: Stack(
                   children: [
-                    Align(alignment: Alignment(-1, -1), child: Clock()),
+                    Align(alignment: Alignment(1, -1), child: Clock()),
                     MapNavi(),
                   ],
                 )),

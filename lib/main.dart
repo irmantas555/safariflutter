@@ -11,6 +11,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/models/clockProvider.dart';
 import 'package:safari_one/services/NoAnimPageRoute.dart';
 import 'package:flutter/services.dart';
+import 'package:safari_one/services/geolocation.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;

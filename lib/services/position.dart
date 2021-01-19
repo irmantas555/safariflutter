@@ -27,8 +27,6 @@ class Position {
     final dirty_X = (farLongShift_Y * tan(0.543766) + farLatShift_X + 865.164) *
             cos(0.543766) -
         896.045;
-
-    final shift_Y_meters = dirty_Y;
     return [dirty_X, dirty_Y];
   }
 
@@ -99,11 +97,31 @@ class Position {
 
   static List<double> getRelativePositionForInclined(
       LocationData data, double width, double height, double iconHeight) {
-//    List<double> meters = getPositionMeters(data);
-    List<double> meters = [817.036514111347, 388.796994666771];
-    final imageWidth = height * 1.8461;
-    print("Meters " + meters.toString());
-    print("width, height " + width.toString() + ", " + height.toString());
+    List<double> meters = getPositionMeters(data);
+    // print("longitude: " +
+    //     data.longitude.toString() +
+    //     "latitude: " +
+    //     data.latitude.toString());
+    // List<double> meters = [180.66, 300.304];
+    var imageWidth;
+    var imageHeight;
+    var noPixelsLeftShift = 0.0;
+    var noPixelsBottomShift = 0.0;
+    if (width / height >= 1.8461) {
+      imageWidth = height * 1.8461;
+      imageHeight = height;
+      noPixelsLeftShift = (width - imageWidth) / 2 - 10;
+    } else {
+      imageHeight = width * 1.8461;
+      imageWidth = width;
+      noPixelsBottomShift = (height - imageHeight) / 2;
+    }
+    // print("Meters " + meters.toString());
+    // print("width, height " + width.toString() + ", " + height.toString());
+    // print("imageWidth, imageHeight " +
+    //     imageWidth.toString() +
+    //     ", " +
+    //     imageHeight.toString());
 
     final tanBeta1 = 573.32 / (meters[1] + 250);
     // print("tanBeta1 " + tanBeta1.toString());
@@ -119,33 +137,36 @@ class Position {
     final shortcutX = 625.65 + (295 / 447.6) * meters[1];
     final projectionFrom400X = 626.65 / shortcutX * XdistanceFrom500;
     final projectionX = 500 - projectionFrom400X;
-    print("projectionX, projectionY " +
-        projectionX.toString() +
-        ", " +
-        projectionY.toString());
+    // print("projectionX, projectionY " +
+    //     projectionX.toString() +
+    //     ", " +
+    //     projectionY.toString());
     final newAngleRad = atan(projectionY / projectionX) + 0.109011345;
     final diagonal = pow((pow(projectionX, 2) + pow(projectionY, 2)), .5);
-    print("new angele degr, diagonal  " +
-        newAngleRad.toString() +
-        ", " +
-        diagonal.toString());
+    // print("new angele degr, diagonal  " +
+    //     newAngleRad.toString() +
+    //     ", " +
+    //     diagonal.toString());
 
     final rotationProjectionX = diagonal * cos(newAngleRad);
     final rotationProjectionY = diagonal * sin(newAngleRad);
-    print("rotationProjectionY " + rotationProjectionY.toString());
-    print("rotationProjectionX " + rotationProjectionX.toString());
+    // print("rotationProjectionY " + rotationProjectionY.toString());
+    // print("rotationProjectionX " + rotationProjectionX.toString());
 
-    final leftOffset = imageWidth * 0.003645833333;
-    final bottomOffset = height * 0.1644230769;
+    final relativeShiftX = (rotationProjectionX + 8.216) / 983.507;
+    final relativeShiftY = (rotationProjectionY + 90.34) / 523.733;
 
-    final positionX = 0.925 * rotationProjectionX / 911.8 * imageWidth + leftOffset;
-    final positionY = 0.61 * rotationProjectionY / 446.1 * height +
-        iconHeight / 2 +
-        bottomOffset;
-    print("positionX, positionY " +
-        positionX.toString() +
-        ", " +
-        positionY.toString());
+    final positionX = relativeShiftX * imageWidth + noPixelsLeftShift;
+    // print("empty shift left: $noPixelsLeftShift");
+    final positionY = relativeShiftY * imageHeight + noPixelsBottomShift;
+    // print("empty shift bottom: $noPixelsBottomShift, icon: $iconHeight");
+    // 0.61 * rotationProjectionY / 446.1 * imageHeight +
+    // iconHeight / 2 +
+    // bottomOffset;
+    // print("positionX, positionY " +
+    //     positionX.toString() +
+    //     ", " +
+    //     positionY.toString());
 
     return [positionX, positionY];
   }

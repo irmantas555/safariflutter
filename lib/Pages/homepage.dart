@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
             NeumorphicButton(
               margin: EdgeInsets.only(top: 20),
               onPressed: () {
-                ClockProvider.unpause(2, 1);
+                ClockProvider.unpause(5, 1);
                 Navigator.pushReplacementNamed(context, '/route');
               },
               style: NeumorphicStyle(

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.0">
-	<name>Example gpx</name>
-	<wpt lat="55.550300" lon="25.064394">
-		<ele>2372</ele>
-		<name>Ivaziavimo kampas</name>
-	</wpt>
-</gpx>
