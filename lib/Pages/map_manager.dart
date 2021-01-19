@@ -31,85 +31,88 @@ class _MapManagerState extends State<MapManager> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
-      return Container(
-        child: Column(
-          children: [
-            Container(
-                height: MediaQuery.of(context).size.height - 120,
-                // width: MediaQuery.of(context).size.width - 50,
+      return new WillPopScope(
+        onWillPop: () async => false,
+        child: Container(
+          child: Column(
+            children: [
+              Container(
+                  height: MediaQuery.of(context).size.height - 120,
+                  // width: MediaQuery.of(context).size.width - 50,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: NeumorphicTheme.baseColor(context),
+                    image: DecorationImage(
+                      colorFilter: ColorFilter.mode(
+                          Color(0xaac8b7b7), BlendMode.softLight),
+                      image: AssetImage("assets/pics/safarifinalForUse.jpg"),
+                      alignment: Alignment.bottomCenter,
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      Align(alignment: Alignment(1, -1), child: Clock()),
+                      MapNavi(),
+                    ],
+                  )),
+              Container(
+                height: 110,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: NeumorphicTheme.baseColor(context),
-                  image: DecorationImage(
-                    colorFilter: ColorFilter.mode(
-                        Color(0xaac8b7b7), BlendMode.softLight),
-                    image: AssetImage("assets/pics/safarifinalForUse.jpg"),
-                    alignment: Alignment.bottomCenter,
-                    fit: BoxFit.fitHeight,
-                  ),
                 ),
-                child: Stack(
-                  children: [
-                    Align(alignment: Alignment(1, -1), child: Clock()),
-                    MapNavi(),
-                  ],
-                )),
-            Container(
-              height: 110,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                color: NeumorphicTheme.baseColor(context),
-              ),
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.all(10),
-                itemCount: amimalsprovider.animalList.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: 10,
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () => {
-                      () => AnimalsProvider,
-                      Navigator.pushReplacementNamed(
-                          context, "/animal/" + index.toString())
-                    },
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: const Color(0xff7c94b6),
-                        image: DecorationImage(
-                          colorFilter: ColorFilter.mode(
-                              Color(0xaac8b7b7), BlendMode.color),
-                          image: AssetImage(
-                              amimalsprovider.animalList[index].imagePath),
-                          fit: BoxFit.fitWidth,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.all(10),
+                  itemCount: amimalsprovider.animalList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      width: 10,
+                    );
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () => {
+                        () => AnimalsProvider,
+                        Navigator.pushReplacementNamed(
+                            context, "/animal/" + index.toString())
+                      },
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xff7c94b6),
+                          image: DecorationImage(
+                            colorFilter: ColorFilter.mode(
+                                Color(0xaac8b7b7), BlendMode.color),
+                            image: AssetImage(
+                                amimalsprovider.animalList[index].imagePath),
+                            fit: BoxFit.fitWidth,
+                          ),
+                          border: Border.all(
+                            color: NeumorphicTheme.accentColor(context),
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 1,
+                                offset: Offset(-3, -3),
+                                color: Colors.white.withOpacity(.15)),
+                            BoxShadow(
+                                blurRadius: 3,
+                                offset: Offset(3, 3),
+                                color: Colors.black.withOpacity(.35)),
+                          ],
                         ),
-                        border: Border.all(
-                          color: NeumorphicTheme.accentColor(context),
-                          width: 2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1,
-                              offset: Offset(-3, -3),
-                              color: Colors.white.withOpacity(.15)),
-                          BoxShadow(
-                              blurRadius: 3,
-                              offset: Offset(3, 3),
-                              color: Colors.black.withOpacity(.35)),
-                        ],
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     });

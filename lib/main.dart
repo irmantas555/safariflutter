@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:safari_one/Pages/animaldetail.dart';
+import 'package:safari_one/Pages/authenticate.dart';
 import 'package:safari_one/Pages/closingscreen.dart';
+import 'package:safari_one/Pages/editpage.dart';
 import 'package:safari_one/Pages/homepage.dart';
 import 'package:safari_one/Pages/routepage.dart';
 import 'package:safari_one/Pages/map_manager.dart';
@@ -59,6 +61,8 @@ class MyApp extends StatelessWidget {
             "/": (context) => HomePage(),
             "/mapman": (context) => MapManager(),
             "/goodBye": (context) => ClosingScreen(),
+            "authentication": (context) => AuthenticatePage(),
+            "editpage": (context) => EditPage(),
             "/route": (context) => RoutePage(),
           },
           onGenerateRoute: (RouteSettings values) {

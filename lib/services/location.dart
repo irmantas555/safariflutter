@@ -48,7 +48,6 @@ class Locate {
       }
     }
     final _controller = StreamController<LocationData>();
-
     Timer.periodic(
         intreval,
         (timer) async =>

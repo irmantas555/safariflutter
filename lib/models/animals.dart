@@ -60,6 +60,26 @@ class AnimalsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void moveUp(int index) {
+    if (index > 0) {
+      Animal first = _animalsList[index - 1];
+      Animal second = _animalsList[index];
+      _animalsList[index] = first;
+      _animalsList[index - 1] = second;
+      notifyListeners();
+    }
+  }
+
+  void moveDown(int index) {
+    if (index < _animalsList.length - 1) {
+      Animal first = _animalsList[index];
+      Animal second = _animalsList[index + 1];
+      _animalsList[index] = second;
+      _animalsList[index + 1] = first;
+      notifyListeners();
+    }
+  }
+
   void remove(int id) {
     _animalsList.forEach((element) {
       if (element.id == id) {

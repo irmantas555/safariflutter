@@ -1,5 +1,6 @@
-import 'package:location/location.dart';
 import 'dart:math';
+
+import 'package:geolocation/geolocation.dart';
 
 class Position {
   static final List<double> tolimasKampas = [55.551132, 25.057135];
@@ -7,15 +8,13 @@ class Position {
   static final double latitudeMultiplyer = 111200.00;
   static final double longitudeMultiplyer = 63788.00;
 
-  static List<double> getPositionMeters(LocationData locationData) {
-    final farLatShift_X =
-        (locationData.latitude - tolimasKampas[0]) * latitudeMultiplyer;
+  static List<double> getPositionMetersTwo(List<double> location) {
+    final farLatShift_X = (location[0] - tolimasKampas[0]) * latitudeMultiplyer;
     final farLongShift_Y =
-        (locationData.longitude - tolimasKampas[1]) * longitudeMultiplyer;
-    final nearLatShift_X =
-        (locationData.latitude - ivaziavimas[0]) * latitudeMultiplyer;
+        (location[1] - tolimasKampas[1]) * longitudeMultiplyer;
+    final nearLatShift_X = (location[0] - ivaziavimas[0]) * latitudeMultiplyer;
     final nearLongShift_Y =
-        (locationData.longitude - ivaziavimas[1]) * longitudeMultiplyer;
+        (location[1] - ivaziavimas[1]) * longitudeMultiplyer;
     // print("farLatShift_X " + farLatShift_X.toString());
     // print("farLongShift_Y " + farLongShift_Y.toString());
     // print("nearLatShift_X: " + nearLatShift_X.toString());
@@ -30,74 +29,9 @@ class Position {
     return [dirty_X, dirty_Y];
   }
 
-  static List<double> getRelativePosition(
-      LocationData locationData, List<double> marginsWidhts) {
-    //margins values should be x-left, x-right, width, y-bottom, y-top, height
-    List<double> meters = getPositionMeters(locationData);
-    final double fraction_x = meters[0] /
-            911.8 *
-            (marginsWidhts[2] -
-                marginsWidhts[2] * marginsWidhts[0] -
-                marginsWidhts[2] * marginsWidhts[1]) +
-        marginsWidhts[2] * marginsWidhts[0];
-    final double fraction_y = meters[1] /
-            446.1 *
-            (marginsWidhts[5] -
-                marginsWidhts[5] * marginsWidhts[3] -
-                marginsWidhts[5] * marginsWidhts[4]) +
-        marginsWidhts[5] * marginsWidhts[3];
-
-    return [fraction_x, fraction_y];
-  }
-
-  static List<double> getRelativePositionForAlign(LocationData locationData) {
-    //margins values should be x-left, x-right, width, y-bottom, y-top, height
-    // print(locationData.latitude.toString() +
-    //     ',' +
-    //     locationData.longitude.toString());
-    List<double> meters = getPositionMeters(locationData);
-    // print("Meters " + meters.toString());
-    final double fraction_x = (meters[0] / 911.8 * 2) - 1;
-    final double fraction_y = 1 - (meters[1] / 446.1 * 2);
-    return [fraction_x, fraction_y];
-  }
-
-  static List<double> getRelativePositionForPositioned(
-      LocationData data, double width, double height, double iconHeight) {
-    List<double> meters = getPositionMeters(data);
-    final imageWidth = height * 2.113;
-    final leftOffsetPx = (width - imageWidth) / 2 + .0131 * imageWidth;
-    final rightOffsetPx = (width - imageWidth) / 2 + .0131 * imageWidth;
-    final bottomOffsetPx = .01617 * height;
-    final topOffsetPx = .057737 * height;
-
-    // print("Meters " + meters.toString());
-
-    final positionPxX =
-        meters[0] / 911.8 * (width - leftOffsetPx - rightOffsetPx) +
-            rightOffsetPx;
-    final positionPxY =
-        meters[1] / 446.1 * (height - bottomOffsetPx - topOffsetPx) +
-            bottomOffsetPx +
-            iconHeight / 2;
-    return [positionPxX, positionPxY];
-  }
-
-  static List<double> getRelativePositionForAligned(LocationData locationData) {
-    //margins values should be x-left, x-right, width, y-bottom, y-top, height
-    // print(locationData.latitude.toString() +
-    //     ',' +
-    //     locationData.longitude.toString());
-    List<double> meters = getPositionMeters(locationData);
-    // print("Meters " + meters.toString());
-    final double fraction_x = (meters[0] / 911.8 * 2) - 1;
-    final double fraction_y = 1 - (meters[1] / 446.1 * 2);
-    return [fraction_x, fraction_y];
-  }
-
-  static List<double> getRelativePositionForInclined(
-      LocationData data, double width, double height, double iconHeight) {
-    List<double> meters = getPositionMeters(data);
+  static List<double> getRelativePositionForInclinedTwo(
+      List<double> data, double width, double height, double iconHeight) {
+    List<double> meters = getPositionMetersTwo(data);
     // print("longitude: " +
     //     data.longitude.toString() +
     //     "latitude: " +
