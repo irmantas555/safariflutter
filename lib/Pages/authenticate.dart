@@ -28,15 +28,15 @@ class _AuthPageState extends State<AuthenticatePage> {
                     hintText: 'Įvęsk slaptažodį',
                   ),
                   onSaved: (String value) {
-                    if (value == 'slaptas321' && tries < 3) {
-                      Navigator.pushReplacementNamed(context, 'editpage');
-                    } else if (tries < 3) {
-                      setState(() {
-                        tries++;
-                      });
-                    } else {
-                      Navigator.pop(context);
-                    }
+                    // if (value == 'slaptas321' && tries < 3) {
+                    Navigator.pushReplacementNamed(context, "/editpage");
+                    // } else if (tries < 3) {
+                    //   setState(() {
+                    //     tries++;
+                    //   });
+                    // } else {
+                    //   Navigator.pop(context);
+                    // }
                   },
                   // validator: (value) {
                   //   if (value == 'slaptas321') {

@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:safari_one/Pages/alertpage.dart';
 import 'package:safari_one/models/animals.dart';
+
+import 'animaleditpage.dart';
 
 class AnimalsListPage extends StatelessWidget {
   @override
@@ -38,13 +41,17 @@ class AnimalsListPage extends StatelessWidget {
     });
   }
 
-  menuresult(String action, int index, BuildContext context) {
+  menuresult(String action, int index, BuildContext context) async {
     switch (action) {
       case "edit":
-        Navigator.pushNamed(context, 'animaldetail' + "/" + index.toString());
+        Navigator.pushNamed(context, "/animaledit/" + index.toString());
         break;
       case "remove":
-        Provider.of<AnimalsProvider>(context).animalList.removeAt(index);
+        AlertPage page = AlertPage(context, "Ar tikrai norite ištrinti");
+        await page.showMyDialog();
+        if (page.action == "yes") {
+          Provider.of<AnimalsProvider>(context).animalList.removeAt(index);
+        }
         break;
     }
   }

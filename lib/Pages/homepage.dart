@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:rive/rive.dart';
 import 'package:safari_one/models/clockProvider.dart';
+import 'package:safari_one/models/locale.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.topRight,
               child: GestureDetector(
                 onLongPress: () =>
-                    Navigator.pushNamed(context, "authentication"),
+                    Navigator.pushNamed(context, "/authentication"),
                 child: SizedBox(
                   width: 120,
                   height: 60,
@@ -41,6 +42,16 @@ class HomePage extends StatelessWidget {
                     "assets/pics/safaribanner.png",
                     fit: BoxFit.contain,
                   ),
+                ),
+                ButtonBar(
+                  children: [
+                    FlatButton(
+                        onPressed: () => MyLocale.locale = "ru",
+                        child: Text("Po ruski")),
+                    FlatButton(
+                        onPressed: () => MyLocale.locale = "en",
+                        child: Text("In English")),
+                  ],
                 ),
                 Spacer(),
                 NeumorphicButton(
