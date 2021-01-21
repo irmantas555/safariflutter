@@ -47,7 +47,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     FlatButton(
                         onPressed: () => MyLocale.locale = "ru",
-                        child: Text("Po ruski")),
+                        child: Text("По Руский")),
                     FlatButton(
                         onPressed: () => MyLocale.locale = "en",
                         child: Text("In English")),

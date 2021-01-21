@@ -30,10 +30,15 @@ void main() async {
       await path_provider.getApplicationDocumentsDirectory();
   Hive.initFlutter(appDocumentDirectory.path);
   Hive.registerAdapter(AnimalHiveAdapter());
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
       .then((_) {
     runApp(MyApp());
   });
+}
+
+void runLocale() async {
+
 }
 
 class MyApp extends StatelessWidget {
@@ -57,7 +62,7 @@ class MyApp extends StatelessWidget {
       ],
       child: NeumorphicApp(
           debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
+          title: 'Safari',
           themeMode: ThemeMode.light,
           theme: NeumorphicThemeData(
             baseColor: _baseColor,

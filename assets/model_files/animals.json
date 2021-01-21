@@ -16,7 +16,7 @@
 	},
 	{
 	  "id": 3,
-	  "name": "Haighland galvijai",
+	  "name": "Highland galvijai",
 	  "imagePath": "assets/pics/bull2.jpg",
 	  "description": "The Highland (Scottish Gaelic: Bò Ghàidhealach; Scots: Hielan coo) is a Scottish breed of rustic cattle.",
 	  "audioPath": "assets/pics/bull2.mp3"
@@ -84,5 +84,177 @@
 	  "description": "Zebra (subgenus Hippotigris) are African equines with distinctive black-and-white striped coats",
 	  "audioPath": "assets/pics/zebra1.mp3"
 	}
-  ]
+  ],
+	"animals_ru": [
+		{
+			"id": 1,
+			"name": "Алпака",
+			"imagePath": "assets/pics/alpaka1.jpg",
+			"description": "TThe alpaca (Vicugna pacos) is a species of South American camelid mammal. It is similar to, and often confused with, the llama.",
+			"audioPath": "assets/pics/alpaka.mp3"
+		},
+		{
+			"id": 2,
+			"name": "Буйвол",
+			"imagePath": "assets/pics/bull1.jpg",
+			"description": "Carl Linnaeus first described the genus Bos and the water buffalo under the binomial Bos bubalis in 1758; the species was known to occur in Asia and was held as a domestic form in Italy.",
+			"audioPath": "assets/pics/deer.mp3"
+		},
+		{
+			"id": 3,
+			"name": "Скот Хаиланд",
+			"imagePath": "assets/pics/bull2.jpg",
+			"description": "The Highland (Scottish Gaelic: Bò Ghàidhealach; Scots: Hielan coo) is a Scottish breed of rustic cattle.",
+			"audioPath": "assets/pics/bull2.mp3"
+		},
+		{
+			"id": 4,
+			"name": "Верблюд",
+			"imagePath": "assets/pics/camel1.jpg",
+			"description": "A camel is an even-toed ungulate in the genus Camelus that bears distinctive fatty deposits known as on its back. Camels have long been domesticated and, as livestock, they provide food (milk and meat) and textiles (fiber and felt from hair). ",
+			"audioPath": "assets/pics/camel1.mp3"
+		},
+		{
+			"id": 5,
+			"name": "Олень",
+			"imagePath": "assets/pics/deer2.jpg",
+			"description": "The use of the terms reindeer and caribou for essentially the same animal can cause confusion",
+			"audioPath": "assets/pics/deer2.mp3"
+		},
+		{
+			"id": 6,
+			"name": "Муфлон",
+			"imagePath": "assets/pics/goat1.jpg",
+			"description": "The mouflon (Ovis gmelini) is a wild sheep native to the Caspian region from eastern Turkey, Armenia, Azerbaijan to Iran. It is thought to be the ancestor of all modern domestic sheep breeds.",
+			"audioPath": "assets/pics/goat1.mp3"
+		},
+		{
+			"id": 7,
+			"name": "Лама",
+			"imagePath": "assets/pics/lama1.jpg",
+			"description": "The llama is a domesticated South American camelid, widely used as a meat and pack animal by Andean cultures since the Pre-Columbian era.",
+			"audioPath": "assets/pics/lama1.mp3"
+		},
+		{
+			"id": 8,
+			"name": "Страус",
+			"imagePath": "assets/pics/ostrich1.jpg",
+			"description": "Struthio is a genus of birds in the order Struthioniformes, whose members are the ostriches.",
+			"audioPath": "assets/pics/ostrich1.mp3"
+		},
+		{
+			"id": 9,
+			"name": "Уэлский пони",
+			"imagePath": "assets/pics/ponny1.jpg",
+			"description": "A pony is a small horse (Equus ferus caballus). Depending on the context, a pony may be a horse that is under an approximate or exact height at the withers or a small horse with a specific conformation and temperament. A pony is typically under the height of 14.2 hands high.",
+			"audioPath": "assets/pics/ponny1.mp3"
+		},
+		{
+			"id": 10,
+			"name": "Кролик",
+			"imagePath": "assets/pics/rabbit1.jpg",
+			"description": "Rabbits are small mammals in the family Leporidae of the order Lagomorpha.",
+			"audioPath": "assets/pics/rabbit1.mp3"
+		},
+		{
+			"id": 11,
+			"name": "Черноволосая овца",
+			"imagePath": "assets/pics/sheep1.jpg",
+			"description": "TThe Valais Blacknose, German: Walliser Schwarznasenschaf, is a breed of domestic sheep originating in the Valais region of Switzerland.",
+			"audioPath": "assets/pics/sheep1.mp3"
+		},
+		{
+			"id": 12,
+			"name": "Зебра",
+			"imagePath": "assets/pics/zebra1.jpg",
+			"description": "Zebra (subgenus Hippotigris) are African equines with distinctive black-and-white striped coats",
+			"audioPath": "assets/pics/zebra1.mp3"
+		}
+	],
+	"animals_en": [
+		{
+			"id": 1,
+			"name": "Alpaca",
+			"imagePath": "assets/pics/alpaka1.jpg",
+			"description": "TThe alpaca (Vicugna pacos) is a species of South American camelid mammal. It is similar to, and often confused with, the llama.",
+			"audioPath": "assets/pics/alpaka.mp3"
+		},
+		{
+			"id": 2,
+			"name": "Buffalo",
+			"imagePath": "assets/pics/bull1.jpg",
+			"description": "Carl Linnaeus first described the genus Bos and the water buffalo under the binomial Bos bubalis in 1758; the species was known to occur in Asia and was held as a domestic form in Italy.",
+			"audioPath": "assets/pics/deer.mp3"
+		},
+		{
+			"id": 3,
+			"name": "Highland catle",
+			"imagePath": "assets/pics/bull2.jpg",
+			"description": "The Highland (Scottish Gaelic: Bò Ghàidhealach; Scots: Hielan coo) is a Scottish breed of rustic cattle.",
+			"audioPath": "assets/pics/bull2.mp3"
+		},
+		{
+			"id": 4,
+			"name": "Camel",
+			"imagePath": "assets/pics/camel1.jpg",
+			"description": "A camel is an even-toed ungulate in the genus Camelus that bears distinctive fatty deposits known as on its back. Camels have long been domesticated and, as livestock, they provide food (milk and meat) and textiles (fiber and felt from hair). ",
+			"audioPath": "assets/pics/camel1.mp3"
+		},
+		{
+			"id": 5,
+			"name": "Reindeer",
+			"imagePath": "assets/pics/deer2.jpg",
+			"description": "The use of the terms reindeer and caribou for essentially the same animal can cause confusion",
+			"audioPath": "assets/pics/deer2.mp3"
+		},
+		{
+			"id": 6,
+			"name": "Mouflon",
+			"imagePath": "assets/pics/goat1.jpg",
+			"description": "The mouflon (Ovis gmelini) is a wild sheep native to the Caspian region from eastern Turkey, Armenia, Azerbaijan to Iran. It is thought to be the ancestor of all modern domestic sheep breeds.",
+			"audioPath": "assets/pics/goat1.mp3"
+		},
+		{
+			"id": 7,
+			"name": "Llama",
+			"imagePath": "assets/pics/lama1.jpg",
+			"description": "The llama is a domesticated South American camelid, widely used as a meat and pack animal by Andean cultures since the Pre-Columbian era.",
+			"audioPath": "assets/pics/lama1.mp3"
+		},
+		{
+			"id": 8,
+			"name": "Ostrich",
+			"imagePath": "assets/pics/ostrich1.jpg",
+			"description": "Struthio is a genus of birds in the order Struthioniformes, whose members are the ostriches.",
+			"audioPath": "assets/pics/ostrich1.mp3"
+		},
+		{
+			"id": 9,
+			"name": "Welsh pony",
+			"imagePath": "assets/pics/ponny1.jpg",
+			"description": "A pony is a small horse (Equus ferus caballus). Depending on the context, a pony may be a horse that is under an approximate or exact height at the withers or a small horse with a specific conformation and temperament. A pony is typically under the height of 14.2 hands high.",
+			"audioPath": "assets/pics/ponny1.mp3"
+		},
+		{
+			"id": 10,
+			"name": "Rabbit",
+			"imagePath": "assets/pics/rabbit1.jpg",
+			"description": "Rabbits are small mammals in the family Leporidae of the order Lagomorpha.",
+			"audioPath": "assets/pics/rabbit1.mp3"
+		},
+		{
+			"id": 11,
+			"name": "Valais Blacknose",
+			"imagePath": "assets/pics/sheep1.jpg",
+			"description": "The Valais Blacknose, German: Walliser Schwarznasenschaf, is a breed of domestic sheep originating in the Valais region of Switzerland.",
+			"audioPath": "assets/pics/sheep1.mp3"
+		},
+		{
+			"id": 12,
+			"name": "Zebra",
+			"imagePath": "assets/pics/zebra1.jpg",
+			"description": "Zebra (subgenus Hippotigris) are African equines with distinctive black-and-white striped coats",
+			"audioPath": "assets/pics/zebra1.mp3"
+		}
+	]
 }
