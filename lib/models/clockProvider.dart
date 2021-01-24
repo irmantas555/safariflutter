@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:async';
 
+import 'package:hive/hive.dart';
+
 class ClockProvider extends ChangeNotifier {
   static final _cloockporvider = ClockProvider._internal();
   int _timeLimit;
@@ -13,12 +15,50 @@ class ClockProvider extends ChangeNotifier {
   Duration _passed;
   bool _idle = true;
   static Timer _timer;
+  static Box prefbox;
+  static int prefLimit;
 
   factory ClockProvider() {
     return _cloockporvider;
   }
 
+  void setPrefs() {
+    prefbox = Hive.box('prefs');
+    if (prefbox.get('timeLimit') != null) {
+      _timeLimit = prefbox.get('timeLimit');
+      _timeFinishes = prefbox.get('timeFinishes');
+      print("From prefs limit: $_timeLimit, finishes $_timeFinishes");
+      prefLimit = _timeLimit;
+    } else {
+      _timeLimit = 5;
+      _timeFinishes = 1;
+      print("Initial limit: $_timeLimit, finishes $_timeFinishes");
+      prefLimit = _timeLimit;
+      prefbox.put('timeLimit', 5);
+      prefbox.put('timeFinishes', 1);
+    }
+  }
+
+  void setLimit(int limit) {
+    prefbox.put('timeLimit', limit);
+    _timeLimit = limit;
+  }
+
+  bool setFinishes(int limit) {
+    if (limit < _timeLimit) {
+      prefbox.put('timeFinishes', limit);
+      _timeFinishes = limit;
+      print("Initial limit: $_timeLimit, finishes $_timeFinishes");
+      return true;
+    } else {
+      prefbox.put('timeFinishes', _timeLimit - 1);
+      _timeFinishes = _timeLimit - 1;
+      return false;
+    }
+  }
+
   ClockProvider._internal() {
+    setPrefs();
     // print("internal started");
   }
 
@@ -38,13 +78,23 @@ class ClockProvider extends ChangeNotifier {
 
   bool get paused => _paused;
 
-  static void unpause(int timelmt, int timeLimitWarningBefore) {
+  // static void unpause(int timelmt, int timeLimitWarningBefore) {
+  //   _cloockporvider._paused = false;
+  //   _cloockporvider._passed = Duration(seconds: 0);
+  //   _cloockporvider._timeLimit = timelmt;
+  //   _cloockporvider._timeFinishes = timeLimitWarningBefore;
+  //   _cloockporvider._timeAlmostOver = false;
+  //   _cloockporvider._whatsleft = '00:0' + timelmt.toString() + ':00';
+  //   _cloockporvider._idle = false;
+  //   _cloockporvider._timeOver = false;
+  //   _cloockporvider._startTimer();
+  // }
+
+  static void unpause() {
     _cloockporvider._paused = false;
     _cloockporvider._passed = Duration(seconds: 0);
-    _cloockporvider._timeLimit = timelmt;
-    _cloockporvider._timeFinishes = timeLimitWarningBefore;
     _cloockporvider._timeAlmostOver = false;
-    _cloockporvider._whatsleft = '00:0' + timelmt.toString() + ':00';
+    _cloockporvider._whatsleft = '00:0' + prefLimit.toString() + ':00';
     _cloockporvider._idle = false;
     _cloockporvider._timeOver = false;
     _cloockporvider._startTimer();

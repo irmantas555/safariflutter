@@ -16,8 +16,8 @@ class _ClockState extends State<Clock> {
         onLongPress: () => ClockProvider().stop(),
         child: Container(
           margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
-          width: 250,
-          height: 80,
+          width: MediaQuery.of(context).size.width / 4.5,
+          height: MediaQuery.of(context).size.width / 15.625,
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -41,6 +41,7 @@ class _ClockState extends State<Clock> {
               style: TextStyle(
                   color: Color(0xff757575),
                   decoration: TextDecoration.none,
+                  fontSize: MediaQuery.of(context).size.width / 25,
                   fontFamily: "nunitor"),
             ),
           ),

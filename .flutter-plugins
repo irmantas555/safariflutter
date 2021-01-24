@@ -1,12 +1,12 @@
 # This is a generated file; do not edit or check into version control.
-audio_session=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\audio_session-0.0.11\\
-file_picker=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\file_picker-2.1.5+1\\
-flutter_plugin_android_lifecycle=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-1.0.11\\
-geolocation=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\geolocation-1.1.2\\
-just_audio=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\just_audio-0.6.6\\
-just_audio_web=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\just_audio_web-0.2.2\\
-path_provider=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-1.6.27\\
-path_provider_linux=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
-path_provider_macos=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+8\\
-path_provider_windows=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.4+3\\
-streams_channel=C:\\Development\\flutter_windows_1.22.5-stable\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\streams_channel-0.3.0\\
+audio_session=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audio_session-0.0.11/
+flutter_plugin_android_lifecycle=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.11/
+geolocation=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/geolocation-1.1.2/
+image_picker=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker-0.6.7+21/
+just_audio=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio-0.6.8/
+just_audio_web=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/just_audio_web-0.2.2/
+path_provider=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.27/
+path_provider_linux=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/
+path_provider_macos=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+8/
+path_provider_windows=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+3/
+streams_channel=/home/irmantas/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/streams_channel-0.3.0/

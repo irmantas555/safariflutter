@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:safari_one/Pages/animalslistpage.dart';
+import 'package:safari_one/Pages/prefeditpage.dart';
 
-class EditPage extends StatelessWidget {
+class EditPage extends StatefulWidget {
+  @override
+  _EditPageState createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditPage> {
+  int mode = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +38,26 @@ class EditPage extends StatelessWidget {
             TextButton(
                 onPressed: () => Navigator.pushNamed(context, "/newanimal"),
                 child: Text("Naujas žvėris")),
+            TextButton(
+                onPressed: () => changeMode(2),
+                child: Text("Redaguoti laikus")),
+            TextButton(
+                onPressed: () => changeMode(1),
+                child: Text("Redaguoti žvėris")),
           ],
         ),
       ),
-      body: AnimalsListPage(),
+      body: mode == 1 ? AnimalsListPage() : PrefEditPage(),
     );
   }
 
   _moveToNew(BuildContext context) {
     ;
+  }
+
+  changeMode(int i) {
+    setState(() {
+      mode = i;
+    });
   }
 }

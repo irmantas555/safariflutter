@@ -1,61 +1,50 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:safari_one/models/animals.dart';
 
-class AlertPage {
-  String content = "";
+class AlertPage{
+  var content = "";
   String action;
+  int index;
   BuildContext context;
 
-  AlertPage(this.context, this.content);
-
-  Future<void> showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Įspėjimas"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(content),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Yes'),
-              onPressed: () {
-                this.action = "yes";
-              },
-            ),
-            TextButton(
-              child: Text('No'),
-              onPressed: () {
-                this.action = "no";
-              },
-            ),
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                this.action = "cancel";
-              },
-            ),
-          ],
-        );
-      },
-    );
+  AlertPage(this.context, this.content, this.index){
+    showdialog();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return AlertDialog(
-  //     content: Text(content),
-  //     actions: [
-  //       TextButton(onPressed: () => action = "yes", child: Text("Yes")),
-  //       TextButton(onPressed: () => action = "no", child: Text("No")),
-  //       TextButton(onPressed: () => action = "cancel", child: Text("Cancel")),
-  //     ],
-  //   );
-  // }
+ AlertDialog showdialog(){
+    return  AlertDialog(
+            title: Text("Įspėjimas"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(content),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Yes'),
+                onPressed: () {
+                  this.action = "yes";
+                  AnimalsProvider().remove(index);
+                },
+              ),
+              TextButton(
+                child: Text('No'),
+                onPressed: () {
+                  this.action = "no";
+                },
+              ),
+              TextButton(
+                child: Text('Cancel'),
+                onPressed: () {
+                  this.action = "cancel";
+                },
+              ),
+            ],
+          );
+
+  }
+
 }

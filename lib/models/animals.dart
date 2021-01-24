@@ -24,7 +24,9 @@ class AnimalsProvider extends ChangeNotifier {
       UnmodifiableListView(_animallist);
 
   Future<void> inint() async {
+    // Hive.deleteBoxFromDisk('animals');
     animalbox = await Hive.openBox('animals');
+    // print("In box: " + animalbox.length.toString());
     if (animalbox.isEmpty) {
       await readAnimalsHive();
     } else {
@@ -74,26 +76,6 @@ class AnimalsProvider extends ChangeNotifier {
     return _animallist.length - 1;
   }
 
-  // void moveUp(int index) {
-  //   if (index > 0) {
-  //     Animal first = animalbox.getAt(index - 1);
-  //     Animal second = animalbox.getAt(index);
-  //     _animalsList[index] = first;
-  //     _animalsList[index - 1] = second;
-  //     notifyListeners();
-  //   }
-  // }
-  //
-  // void moveDown(int index) {
-  //   if (index < _animalsList.length - 1) {
-  //     Animal first = _animalsList[index];
-  //     Animal second = _animalsList[index + 1];
-  //     _animalsList[index] = second;
-  //     _animalsList[index + 1] = first;
-  //     notifyListeners();
-  //   }
-  // }
-
   void remove(int index) {
     _animallist.removeAt(index);
     animalbox.deleteAt(index);
@@ -139,16 +121,40 @@ class AnimalsProvider extends ChangeNotifier {
           await rootBundle.loadString("assets/model_files/animals.json");
       // print("Contents " + contents);
 
-      var animalsJson = jsonDecode(contents)['animals'] as List;
-      List<Animal> animals =
-          animalsJson.map((anmJson) => Animal.fromJson(anmJson)).toList();
-      animals.forEach((element) {
-        // print(element.name);
-      });
-      if (animals.length > 0) {}
-      for (int i = 0; i < animals.length; i++) {
-        hive = AnimalHive(animals[i].name, animals[i].imagePath,
-            animals[i].description, animals[i].audioPath);
+      var animalsJsonLt = jsonDecode(contents)['animals_lt'] as List;
+      var animalsJsonRu = jsonDecode(contents)['animals_ru'] as List;
+      var animalsJsonEn = jsonDecode(contents)['animals_en'] as List;
+      List<Animal> animalsLt =
+          animalsJsonLt.map((anmJson) => Animal.fromJson(anmJson)).toList();
+      List<Animal> animalsRu =
+          animalsJsonRu.map((anmJson) => Animal.fromJson(anmJson)).toList();
+      List<Animal> animalsEn =
+          animalsJsonEn.map((anmJson) => Animal.fromJson(anmJson)).toList();
+
+      // animalsLt.forEach((element) {
+      //   print(element.name);
+      // });
+      //
+      // animalsRu.forEach((element) {
+      //   print(element.name);
+      // });
+      //
+      // animalsEn.forEach((element) {
+      //   print(element.name);
+      // });
+      if (animalsLt.length > 0) {}
+      for (int i = 0; i < animalsLt.length; i++) {
+        hive = AnimalHive(
+            animalsLt[i].name,
+            animalsRu[i].name,
+            animalsEn[i].name,
+            animalsLt[i].imagePath,
+            animalsLt[i].description,
+            animalsRu[i].description,
+            animalsEn[i].description,
+            animalsLt[i].audioPath,
+            animalsRu[i].audioPath,
+            animalsEn[i].audioPath);
         _animallist.add(hive);
         animalbox.add(hive);
       }
@@ -157,26 +163,5 @@ class AnimalsProvider extends ChangeNotifier {
       print("Error occoured");
       return null;
     }
-  }
-
-  void importanimals() async {
-    await inint();
-    // await Hive.deleteBoxFromDisk("animals");
-    // for (int k = 0; k < animalboxtwo.length; k++) {
-    //   animalboxtwo.delete(animalboxtwo.getAt(k));
-    // }
-    // for (int i = 0; i < _animalsList.length; i++) {
-    //   animalboxtwo.add(AnimalHive(
-    //       _animalsList[i].name,
-    //       _animalsList[i].imagePath,
-    //       _animalsList[i].description,
-    //       _animalsList[i].audioPath));
-    // }
-    print("box length" + animalbox.length.toString());
-    // animalboxtwo.close();
-  }
-
-  persist() {
-    Hive.box('animals');
   }
 }

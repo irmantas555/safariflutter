@@ -24,16 +24,22 @@ class AnimalsListPage extends StatelessWidget {
               trailing: PopupMenuButton(
                 icon: Icon(Icons.more_vert),
                 tooltip: 'Redaguoti',
-                onSelected: (result) => {menuresult(result, index, context)},
+                onSelected: (result) => {
+                  if (result == "edit")
+                    {
+                      Navigator.pushNamed(
+                          context, "/animaledit/" + index.toString())
+                    }
+                  else if (result == "delete")
+                    {
+                      AnimalsProvider().remove(index),
+                    },
+                },
                 itemBuilder: (context) => <PopupMenuItem<String>>[
                   const PopupMenuItem<String>(
                       value: "edit", child: Text("Redaguoti")),
                   const PopupMenuItem<String>(
                       value: "delete", child: Text("Trinti")),
-                  const PopupMenuItem<String>(
-                      value: "up", child: Text("Aukštyn")),
-                  const PopupMenuItem<String>(
-                      value: "down", child: Text("Žemyn")),
                 ],
               ),
             );
@@ -41,18 +47,32 @@ class AnimalsListPage extends StatelessWidget {
     });
   }
 
-  menuresult(String action, int index, BuildContext context) async {
-    switch (action) {
-      case "edit":
-        Navigator.pushNamed(context, "/animaledit/" + index.toString());
-        break;
-      case "remove":
-        AlertPage page = AlertPage(context, "Ar tikrai norite ištrinti");
-        await page.showMyDialog();
-        if (page.action == "yes") {
-          Provider.of<AnimalsProvider>(context).animalList.removeAt(index);
-        }
-        break;
-    }
+  AlertDialog showdialog(BuildContext context, String content, int index) {
+    return AlertDialog(
+      title: Text("Įspėjimas"),
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: <Widget>[
+            Text(content),
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          child: Text('Yes'),
+          onPressed: () {
+            AnimalsProvider().remove(index);
+          },
+        ),
+        TextButton(
+          child: Text('No'),
+          onPressed: () {},
+        ),
+        TextButton(
+          child: Text('Cancel'),
+          onPressed: () {},
+        ),
+      ],
+    );
   }
 }

@@ -58,7 +58,7 @@ class _MapNaviState extends State<MapNavi> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height - 120;
+    var height = MediaQuery.of(context).size.height * .8;
     var width = MediaQuery.of(context).size.width;
     return StreamBuilder<List<double>>(
         stream: geoLoc.getgeoloc(Duration(seconds: 3)),

@@ -15,13 +15,14 @@ import 'package:safari_one/models/animalhive.dart';
 import 'package:safari_one/models/animals.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:safari_one/models/clockProvider.dart';
-import 'package:safari_one/models/locale.dart';
 import 'package:safari_one/services/NoAnimPageRoute.dart';
 import 'package:flutter/services.dart';
 import 'package:safari_one/services/geolocation.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'models/locals.dart';
 
 void main() async {
   // debugPaintSizeEnabled = true;
@@ -37,22 +38,22 @@ void main() async {
   });
 }
 
-void runLocale() async {
-
-}
-
 class MyApp extends StatelessWidget {
-  final Color _baseColor = Color(0xaaeeeeee);
-  MyLocale locale = MyLocale();
-
+  final Color _baseColor = Color(0xFFEBE2E3);
   Color get baseColor => _baseColor;
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        FutureProvider(
-          create: (_) async => AnimalsProvider(),
+        ListenableProvider<AnimalsProvider>(
+          create: (_) => AnimalsProvider(),
           key: ObjectKey("animal"),
+          lazy: false,
+        ),
+        ListenableProvider<LocaleProvider>(
+          create: (_) => LocaleProvider(),
+          key: ObjectKey('locale'),
           lazy: false,
         ),
         ListenableProvider(
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
           },
           onGenerateRoute: (RouteSettings values) {
             List<String> routes = values.name.split("/");
+            // print(routes.toString());
             String route = routes[1];
             int index = int.parse(routes[2]);
             NoAnimationMaterialPageRoute currentroute;

@@ -30,14 +30,16 @@ class _MapManagerState extends State<MapManager> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AnimalsProvider>(builder: (context, amimalsprovider, _) {
+    final double bottomHeight =
+        (MediaQuery.of(context).size.height * .2).round().toDouble();
+    return Consumer<AnimalsProvider>(builder: (context, animalsprovider, _) {
       return new WillPopScope(
         onWillPop: () async => false,
         child: Container(
           child: Column(
             children: [
               Container(
-                  height: MediaQuery.of(context).size.height - 120,
+                  height: MediaQuery.of(context).size.height * .8,
                   // width: MediaQuery.of(context).size.width - 50,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -57,7 +59,7 @@ class _MapManagerState extends State<MapManager> {
                     ],
                   )),
               Container(
-                height: 110,
+                height: bottomHeight,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: NeumorphicTheme.baseColor(context),
@@ -65,22 +67,22 @@ class _MapManagerState extends State<MapManager> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.all(10),
-                  itemCount: amimalsprovider.animalList.length,
+                  itemCount: animalsprovider.animalList.length,
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
-                      width: 10,
+                      width: 5,
                     );
                   },
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () => {
-                        () => AnimalsProvider,
+                        animalsprovider.setCurrent(index),
                         Navigator.pushReplacementNamed(
                             context, "/animal/" + index.toString())
                       },
                       child: Container(
-                        height: 100,
-                        width: 100,
+                        height: bottomHeight * .8,
+                        width: bottomHeight * .8,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: const Color(0xff7c94b6),
@@ -88,8 +90,8 @@ class _MapManagerState extends State<MapManager> {
                             colorFilter: ColorFilter.mode(
                                 Color(0xaac8b7b7), BlendMode.color),
                             image: AssetImage(
-                                amimalsprovider.animalList[index].imagePath),
-                            fit: BoxFit.fitWidth,
+                                animalsprovider.animalList[index].imagePath),
+                            fit: BoxFit.fitHeight,
                           ),
                           border: Border.all(
                             color: NeumorphicTheme.accentColor(context),

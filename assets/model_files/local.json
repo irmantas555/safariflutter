@@ -1,20 +1,17 @@
 {
-  "text_lt": [
+  "text_lt":
     {
       "id": 0,
-      "value": ["Pradėti", "Įspėjimas", "Redaguoti", "Trinti", "Aukštyn", "Įvesti", "Redagavimo lapas", "Naujas žvėris", "Taip", "Ne", "Atšaukti", "", "", "", "", "", "", "", "", "", "", "", "", ""]
-    }
-  ],
-  "text_ru": [
+      "value": ["Pradėti", "Įspėjimas", "Redaguoti", "Trinti", "Aukštyn", "Įvesti", "Redagavimo lapas", "Naujas žvėris", "Taip", "Ne", "Atšaukti"]
+    },
+  "text_ru":
     {
-      "id": 0,
-      "value": ["Нaчать", "Предупреждение", "Редактировать", "Удалить", "Вверх", "Вниз", "Ввести", "Лист корекции", "Новое животное", "Да", "Нет", "Отмена", "", "", "", "", "", "", "", "", "", "", "", ""]
-    }
-  ],
-  "text_en": [
+      "id": 1,
+      "value": ["Нaчать", "Предупреждение", "Редактировать", "Удалить", "Вверх", "Вниз", "Ввести", "Лист корекции", "Новое животное", "Да", "Нет", "Отмена"]
+    },
+  "text_en":
     {
-      "id": 0,
-      "value": ["Start", "Warning", "Edit", "Delete", "Move up", "Move down", "Enter", "Edit page", "New animal", "Yes", "No", "Cancel", "", "", "", "", "", "", "", "", "", "", "", ""]
+      "id": 2,
+      "value": ["Start", "Warning", "Edit", "Delete", "Move up", "Move down", "Enter", "Edit page", "New animal", "Yes", "No", "Cancel"]
     }
-  ]
 }
