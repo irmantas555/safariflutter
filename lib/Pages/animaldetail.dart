@@ -154,7 +154,7 @@ class AnimalDetail extends StatelessWidget {
                                 elevation: 8,
                                 color: Colors.white,
                                 onPressed: () {
-                                  print("Close pressed");
+                                  // print("Close pressed");
                                   Get.back();
                                 },
                                 child: Icon(

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -59,6 +60,22 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 )),
+            Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
+                  onLongPress: () => SystemNavigator.pop(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: SizedBox(
+                      width: textHeight * 2.5,
+                      height: textHeight,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: NeumorphicTheme.baseColor(context)),
+                      ),
+                    ),
+                  ),
+                )),
             Center(
               child: Column(
                 children: [
@@ -77,13 +94,13 @@ class _HomePageState extends State<HomePage> {
                   ButtonBar(
                     alignment: MainAxisAlignment.center,
                     children: [
-                      currentLocale != "ru"
+                      currentLocale != "lt"
                           ? FlatButton(
                               onPressed: () => {
-                                    locale.changeLocaleList("ru"),
-                                    changeTo("ru"),
+                                    locale.changeLocaleList("lt"),
+                                    changeTo("lt"),
                                   },
-                              child: getText("По Руский", textHeight))
+                              child: getText("Lietuviškai", textHeight))
                           : SizedBox.shrink(),
                       currentLocale != "en"
                           ? FlatButton(
@@ -93,13 +110,13 @@ class _HomePageState extends State<HomePage> {
                                   },
                               child: getText("In English", textHeight))
                           : SizedBox.shrink(),
-                      currentLocale != "lt"
+                      currentLocale != "ru"
                           ? FlatButton(
                               onPressed: () => {
-                                    locale.changeLocaleList("lt"),
-                                    changeTo("lt"),
+                                    locale.changeLocaleList("ru"),
+                                    changeTo("ru"),
                                   },
-                              child: getText("Lietuviškai", textHeight))
+                              child: getText("По Руский", textHeight))
                           : SizedBox.shrink(),
                     ],
                   ),
@@ -153,6 +170,7 @@ class _HomePageState extends State<HomePage> {
   void getPrefs() async {
     // await Hive.deleteBoxFromDisk('prefs');
     await Hive.openBox('prefs');
+    await Hive.openBox('times');
     Get.put(ClockGetter());
   }
 

@@ -5,11 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:safari_one/models/clockProvider.dart';
 
 class Clock extends StatelessWidget {
-  final ClockGetter clockGetter = Get.find();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () => clockGetter.stop(),
+      onLongPress: () => ClockGetter.stop(),
       child: Container(
         margin: EdgeInsets.fromLTRB(10, 25, 0, 0),
         width: MediaQuery.of(context).size.width / 4.5,
@@ -17,7 +16,7 @@ class Clock extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: clockGetter.timeAlmostOver == true
+          color: ClockGetter.timeAlmostOver == true
               ? Colors.pink
               : Colors.white.withOpacity(.8),
           boxShadow: [
@@ -34,7 +33,7 @@ class Clock extends StatelessWidget {
         child: Center(
           child: Obx(
             () => Text(
-              clockGetter.whatsleft,
+              ClockGetter.whatsleft,
               style: TextStyle(
                   color: Color(0xff757575),
                   decoration: TextDecoration.none,

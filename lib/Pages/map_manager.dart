@@ -58,7 +58,7 @@ class MapManager extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () => {
-                      if (!ClockGetter().timeAlmostOver.value)
+                      if (!ClockGetter.timeAlmostOver.value)
                         {
                           animalsGetter.setCurrent(index),
                           Get.toNamed("/animal/" + index.toString())
@@ -78,8 +78,8 @@ class MapManager extends StatelessWidget {
                           fit: BoxFit.fitHeight,
                         ),
                         border: Border.all(
-                          color: NeumorphicTheme.accentColor(context),
-                          width: 2,
+                          color: Colors.deepOrange,
+                          width: 1,
                         ),
                         boxShadow: [
                           BoxShadow(

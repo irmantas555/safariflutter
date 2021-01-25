@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: NeumorphicThemeData(
         baseColor: Color(0xFF3E3E3E),
+        accentColor: Colors.deepOrangeAccent,
         lightSource: LightSource.topLeft,
         depth: 6,
       ),

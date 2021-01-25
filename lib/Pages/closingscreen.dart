@@ -21,7 +21,7 @@ class ClosingScreen extends StatelessWidget {
                 flex: 5,
               ),
               GestureDetector(
-                  onLongPress: () => ClockGetter().stop(), child: Clock()),
+                  onLongPress: () => ClockGetter.stop(), child: Clock()),
               Spacer(
                 flex: 5,
               ),

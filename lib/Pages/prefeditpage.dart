@@ -12,14 +12,16 @@ class PrefEditPage extends StatefulWidget {
 }
 
 class _PrefEditPageState extends State<PrefEditPage> {
-  double timesliderValue = ClockGetter().timeLimit.toDouble();
-  double timefinishesliderValue = ClockGetter().timeFinishes.toDouble();
   Box prefs = Hive.box('prefs');
+  double timesliderValue;
+  double timefinishesliderValue = ClockGetter().timeFinishes.toDouble();
   String pwdValue;
   var value;
 
   @override
   Widget build(BuildContext context) {
+    timesliderValue = prefs.get('timeLimit').toDouble();
+    timefinishesliderValue = prefs.get('timeFinishes').toDouble();
     return SliderTheme(
       data: SliderThemeData(
         trackShape: RectangularSliderTrackShape(),
