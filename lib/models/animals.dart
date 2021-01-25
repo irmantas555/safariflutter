@@ -18,7 +18,7 @@ class AnimalsGetter extends GetxController {
   int activeAnimalIndex;
 
   AnimalsGetter() {
-    inint();
+    if (_animallist.isEmpty) inint();
   }
 
   List<AnimalHive> get animallist => _animallist;
