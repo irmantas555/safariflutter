@@ -21,21 +21,39 @@ class AnimalHiveAdapter extends TypeAdapter<AnimalHive> {
       fields[1] as String,
       fields[2] as String,
       fields[3] as String,
+      fields[4] as String,
+      fields[5] as String,
+      fields[6] as String,
+      fields[7] as String,
+      fields[8] as String,
+      fields[9] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AnimalHive obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.imagePath)
+      ..write(obj.nameRu)
       ..writeByte(2)
-      ..write(obj.description)
+      ..write(obj.nameEn)
       ..writeByte(3)
-      ..write(obj.audioPath);
+      ..write(obj.imagePath)
+      ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
+      ..write(obj.descriptionRu)
+      ..writeByte(6)
+      ..write(obj.descriptionEn)
+      ..writeByte(7)
+      ..write(obj.audioPath)
+      ..writeByte(8)
+      ..write(obj.audioPathRu)
+      ..writeByte(9)
+      ..write(obj.audioPathEn);
   }
 
   @override

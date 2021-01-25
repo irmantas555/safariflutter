@@ -1,34 +1,85 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'dart:async';
 
-class ClockProvider extends ChangeNotifier {
-  static final _cloockporvider = ClockProvider._internal();
+import 'package:hive/hive.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:safari_one/Pages/closingscreen.dart';
+import 'package:safari_one/Pages/homepage.dart';
+import 'package:safari_one/Pages/map_manager.dart';
+
+class ClockGetter extends GetxController {
+  static final _cloockporvider = ClockGetter._internal();
   int _timeLimit;
   int _timeFinishes;
-  bool _timeAlmostOver;
-  bool _timeOver;
+  final timeAlmostOver = RxBool();
+  final timeOver = RxBool();
   bool _paused;
-  String _whatsleft;
+  var _whatsleft = "".obs;
   Duration _passed;
-  bool _idle = true;
+  final idle = RxBool(true);
   static Timer _timer;
+  static Box prefbox;
+  static int prefLimit;
+  static final player = AudioPlayer();
 
-  factory ClockProvider() {
+  factory ClockGetter() {
     return _cloockporvider;
   }
 
-  ClockProvider._internal() {
+  void setPrefs() {
+    prefbox = Hive.box('prefs');
+    if (prefbox.get('timeLimit') != null) {
+      _timeLimit = prefbox.get('timeLimit');
+      _timeFinishes = prefbox.get('timeFinishes');
+      // _timeLimit = 20;
+      // _timeFinishes = 10;
+      print("From prefs limit: $_timeLimit, finishes $_timeFinishes");
+      prefLimit = _timeLimit;
+    } else {
+      _timeLimit = 5;
+      _timeFinishes = 1;
+      print("Initial limit: $_timeLimit, finishes $_timeFinishes");
+      prefLimit = _timeLimit;
+      prefbox.put('timeLimit', 5);
+      prefbox.put('timeFinishes', 1);
+    }
+    if (prefbox.get('password') == null) {
+      prefbox.put('password', 'safari321');
+    }
+  }
+
+  void setLimit(int limit) {
+    prefbox.put('timeLimit', limit);
+    _timeLimit = limit;
+  }
+
+  bool setFinishes(int limit) {
+    if (limit < _timeLimit) {
+      prefbox.put('timeFinishes', limit);
+      _timeFinishes = limit;
+      print("Initial limit: $_timeLimit, finishes $_timeFinishes");
+      return true;
+    } else {
+      prefbox.put('timeFinishes', _timeLimit - 1);
+      _timeFinishes = _timeLimit - 1;
+      return false;
+    }
+  }
+
+  ClockGetter._internal() {
+    setPrefs();
     // print("internal started");
   }
 
-  String get whatsleft => _whatsleft;
+  String get whatsleft => _whatsleft.value;
 
-  bool get idle => _idle;
+  // bool get idle => _idle.value;
 
-  bool get timeAlmostOver => _timeAlmostOver;
+  // bool get timeAlmostOver => _timeAlmostOver.value;
 
-  bool get timeOver => _timeOver;
+  // bool get timeOver => _timeOver.value;
 
   Duration get passed => _passed;
 
@@ -38,15 +89,14 @@ class ClockProvider extends ChangeNotifier {
 
   bool get paused => _paused;
 
-  static void unpause(int timelmt, int timeLimitWarningBefore) {
+  static void unpause() async {
     _cloockporvider._paused = false;
     _cloockporvider._passed = Duration(seconds: 0);
-    _cloockporvider._timeLimit = timelmt;
-    _cloockporvider._timeFinishes = timeLimitWarningBefore;
-    _cloockporvider._timeAlmostOver = false;
-    _cloockporvider._whatsleft = '00:0' + timelmt.toString() + ':00';
-    _cloockporvider._idle = false;
-    _cloockporvider._timeOver = false;
+    _cloockporvider.timeAlmostOver.value = false;
+    _cloockporvider._whatsleft('00:0' + prefLimit.toString() + ':00');
+    _cloockporvider.idle.value = false;
+    _cloockporvider.timeOver.value = false;
+    infoTrack();
     _cloockporvider._startTimer();
   }
 
@@ -64,32 +114,35 @@ class ClockProvider extends ChangeNotifier {
     if (addDuration) {
       _passed += Duration(seconds: 1);
     }
-    _whatsleft = format(_passed);
+    _whatsleft(format(_passed));
     if (_passed.inMinutes.abs() >= timeLimit - timeFinishes) {
-      _timeAlmostOver = true;
+      if (!timeAlmostOver.value) {
+        timeAlmostOver.value = true;
+        Get.off(MapManager());
+      }
     }
     if (_passed.inMinutes.abs() >= timeLimit) {
-      _timeOver = true;
+      if (!timeOver.value) {
+        Get.off(ClosingScreen());
+        timeOver.value = true;
+      }
     }
     // print("tick" + _passed.inSeconds.toString());
-    notifyListeners();
   }
 
   void stop() {
-    // print("stop pressed");
-    // _timer.cancel();
-    _idle = true;
-    notifyListeners();
+    print("stop pressed");
+    if (player.playing) {
+      _palyerStop();
+    }
+    _timer.cancel();
+    idle.value = true;
+    Get.off(HomePage());
+    print("idle value: " + idle.value.toString());
   }
 
   void closing() {
     _timer.cancel();
-  }
-
-  @override
-  void addListener(VoidCallback listener) {
-    super.addListener(listener);
-    // print(listener.toString());
   }
 
   static format(Duration d) =>
@@ -98,4 +151,13 @@ class ClockProvider extends ChangeNotifier {
           .split('.')
           .first
           .padLeft(8, "0");
+
+  static void infoTrack() async {
+    await player.setAsset('assets/audio/deer.mp3');
+    await player.play();
+  }
+
+  static void _palyerStop() {
+    player.stop();
+  }
 }
