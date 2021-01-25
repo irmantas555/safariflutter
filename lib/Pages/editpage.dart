@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:safari_one/Pages/animalslistpage.dart';
 import 'package:safari_one/Pages/prefeditpage.dart';
 
@@ -36,11 +37,11 @@ class _EditPageState extends State<EditPage> {
               ),
             ),
             TextButton(
-                onPressed: () => Navigator.pushNamed(context, "/newanimal"),
+                onPressed: () => Get.toNamed("/newanimal"),
                 child: Text("Naujas žvėris")),
             TextButton(
                 onPressed: () => changeMode(2),
-                child: Text("Redaguoti laikus")),
+                child: Text("Redaguoti nustatymus")),
             TextButton(
                 onPressed: () => changeMode(1),
                 child: Text("Redaguoti žvėris")),

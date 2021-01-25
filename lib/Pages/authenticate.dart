@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class AuthenticatePage extends StatefulWidget {
   AuthenticatePage({Key key}) : super(key: key);
@@ -9,10 +11,12 @@ class AuthenticatePage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthenticatePage> {
   final _formKey = GlobalKey<FormState>();
+  var preferences = Hive.box('prefs');
   int tries = 0;
 
   @override
   Widget build(BuildContext context) {
+    print(preferences.get('password'));
     return Center(
         child: Card(
       child: SizedBox(
@@ -24,19 +28,20 @@ class _AuthPageState extends State<AuthenticatePage> {
             child: Column(
               children: [
                 TextFormField(
+                  obscureText: true,
                   decoration: const InputDecoration(
                     hintText: 'Įvęsk slaptažodį',
                   ),
                   onSaved: (String value) {
-                    // if (value == 'slaptas321' && tries < 3) {
-                    Navigator.pushReplacementNamed(context, "/editpage");
-                    // } else if (tries < 3) {
-                    //   setState(() {
-                    //     tries++;
-                    //   });
-                    // } else {
-                    //   Navigator.pop(context);
-                    // }
+                    if (value == preferences.get("password") && tries < 3) {
+                      Navigator.pushReplacementNamed(context, "/editpage");
+                    } else if (tries < 3) {
+                      setState(() {
+                        tries++;
+                      });
+                    } else {
+                      Get.back();
+                    }
                   },
                   // validator: (value) {
                   //   if (value == 'slaptas321') {

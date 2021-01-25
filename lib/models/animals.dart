@@ -5,23 +5,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:safari_one/models/animal.dart';
 import 'package:safari_one/models/animalhive.dart';
 
-class AnimalsProvider extends ChangeNotifier {
+class AnimalsGetter extends GetxController {
   // static final animalbox = () async => await Hive.openBox('animals');
-  static final List<AnimalHive> _animallist = [];
+  static var _animallist = <AnimalHive>[].obs;
   static Box animalbox;
   AnimalHive activeAnimal;
   int activeAnimalIndex;
 
-  AnimalsProvider() {
+  AnimalsGetter() {
     inint();
   }
 
-  UnmodifiableListView<AnimalHive> get animalList =>
-      UnmodifiableListView(_animallist);
+  List<AnimalHive> get animallist => _animallist;
 
   Future<void> inint() async {
     // Hive.deleteBoxFromDisk('animals');
@@ -40,7 +40,6 @@ class AnimalsProvider extends ChangeNotifier {
   void addAll(Iterable<AnimalHive> animalist) {
     _animallist.addAll(_animallist);
     animalbox.addAll(animalist);
-    notifyListeners();
   }
 
   void setCurrent(int index) {
@@ -48,7 +47,6 @@ class AnimalsProvider extends ChangeNotifier {
       activeAnimalIndex = index;
       activeAnimal = _animallist[index];
     }
-    notifyListeners();
   }
 
   void next() {
@@ -58,7 +56,6 @@ class AnimalsProvider extends ChangeNotifier {
         activeAnimal = _animallist[activeAnimalIndex];
       }
     }
-    notifyListeners();
   }
 
   void previous() {
@@ -66,26 +63,22 @@ class AnimalsProvider extends ChangeNotifier {
       activeAnimalIndex = activeAnimalIndex - 1;
       activeAnimal = _animallist[activeAnimalIndex];
     }
-    notifyListeners();
   }
 
   int add(AnimalHive animal) {
     _animallist.add(animal);
     animalbox.add(animal);
-    notifyListeners();
     return _animallist.length - 1;
   }
 
   void remove(int index) {
     _animallist.removeAt(index);
     animalbox.deleteAt(index);
-    notifyListeners();
   }
 
-  void update(AnimalHive animalHive, int index) {
+  void updateAnimal(AnimalHive animalHive, int index) {
     _animallist[index] = animalHive;
     animalbox.put(animalbox.keyAt(index), animalHive);
-    notifyListeners();
   }
 
   static Future<List<Animal>> readAnimals() async {

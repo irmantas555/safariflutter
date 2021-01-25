@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:safari_one/Pages/alertpage.dart';
 import 'package:safari_one/models/clockProvider.dart';
 
 class PrefEditPage extends StatefulWidget {
@@ -9,8 +12,11 @@ class PrefEditPage extends StatefulWidget {
 }
 
 class _PrefEditPageState extends State<PrefEditPage> {
-  double timesliderValue = ClockProvider().timeLimit.toDouble();
-  double timefinishesliderValue = ClockProvider().timeFinishes.toDouble();
+  double timesliderValue = ClockGetter().timeLimit.toDouble();
+  double timefinishesliderValue = ClockGetter().timeFinishes.toDouble();
+  Box prefs = Hive.box('prefs');
+  String pwdValue;
+  var value;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +40,13 @@ class _PrefEditPageState extends State<PrefEditPage> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(children: [
+        child: ListView(children: [
           _myLabel("Laiko limitas min."),
           _sliderOne(),
           _myLabel("Laiko įspėjimas kai liks min."),
           _sliderTwo(),
+          _myLabel("Slaptažodis nustataymų redagavimui."),
+          _pwdInput(),
         ]),
       ),
     );
@@ -75,7 +83,7 @@ class _PrefEditPageState extends State<PrefEditPage> {
               max: 60,
               divisions: 11,
               onChangeEnd: (value) {
-                ClockProvider().setLimit(value.round().toInt());
+                ClockGetter().setLimit(value.round().toInt());
               }),
         ),
         Text("60"),
@@ -102,13 +110,13 @@ class _PrefEditPageState extends State<PrefEditPage> {
               max: 10,
               divisions: 10,
               onChangeEnd: (value) {
-                if (!ClockProvider().setFinishes(value.round().toInt())) {
+                if (!ClockGetter().setFinishes(value.round().toInt())) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
                           "Laiko pabaigos ipėjimas  prasideda ankščiau nei prasideda laikas, "
                                   "laiko įspėjimas nustatytas kai liks " +
-                              ClockProvider().timeFinishes.toString()),
+                              ClockGetter().timeFinishes.toString()),
                     ),
                   );
                 }
@@ -116,6 +124,32 @@ class _PrefEditPageState extends State<PrefEditPage> {
               }),
         ),
         Text("10"),
+      ],
+    );
+  }
+
+  _pwdInput() {
+    return Column(
+      children: [
+        TextFormField(
+          initialValue: prefs.get('password'),
+          decoration: const InputDecoration(hintText: "Žvėries pavadinimas"),
+          onChanged: (String value) {
+            pwdValue = value;
+          },
+        ),
+        TextButton(
+            onPressed: () async => {
+                  value = await Get.dialog(AlertPage(
+                          "Bus nustatytas naujas slaptąžodis $pwdValue, tęsti?")
+                      .showdialog()),
+                  if (value == 'yes')
+                    {
+                      print('received yes'),
+                      prefs.put('password', pwdValue),
+                    }
+                },
+            child: Text("Patvirtinti"))
       ],
     );
   }

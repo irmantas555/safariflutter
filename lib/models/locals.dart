@@ -5,39 +5,40 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
 
-class LocaleProvider extends ChangeNotifier {
+class LocaleGetter extends GetxController {
   // static final animalbox = () async => await Hive.openBox('animals');
-  static final List<String> _lt_list = [];
-  static final List<String> _ru_list = [];
-  static final List<String> _en_list = [];
-  static final List<String> _current_list = [];
-  static String currentLocale = "lt";
+  static var _lt_list = <String>[].obs;
+  static var _ru_list = <String>[].obs;
+  static var _en_list = <String>[].obs;
+  static var _current_list = <String>[].obs;
+  static RxString currentLocale = "lt".obs;
   static Future<int> loaded =
       Future.delayed(Duration(seconds: 2)).then((value) => 1);
   static bool finished;
 
-  LocaleProvider() {
+  LocaleGetter() {
+    _current_list.add("Pradėti");
     readLocales();
   }
 
-  UnmodifiableListView<String> get current_list =>
-      UnmodifiableListView(_current_list);
+  get current_list => _current_list;
 
   Future<void> changeLocaleList(String locale) async {
     if (locale != currentLocale) {
       switch (locale) {
         case "lt":
-          changeItems(_lt_list);
-          currentLocale = locale;
+          current_list.setAll(0, _lt_list);
+          currentLocale(locale);
           break;
         case "ru":
-          changeItems(_ru_list);
-          currentLocale = locale;
+          current_list.setAll(0, _ru_list);
+          currentLocale(locale);
           break;
         case "en":
-          changeItems(_en_list);
-          currentLocale = locale;
+          current_list.setAll(0, _en_list);
+          currentLocale(locale);
           break;
       }
     }
@@ -46,7 +47,6 @@ class LocaleProvider extends ChangeNotifier {
   changeItems(List<String> list) {
     for (int i = 0; i < _current_list.length; i++) {
       _current_list[i] = list[i];
-      notifyListeners();
     }
   }
 
@@ -66,11 +66,11 @@ class LocaleProvider extends ChangeNotifier {
       List<String> enString = new List<String>.from(enMap['value']);
 
       if (ltString.length > 0) {
-        if (null != _current_list) {
-          if (_current_list.length > 0) {
-            _current_list.clear();
-          }
-        }
+        // if (null != _current_list) {
+        //   if (_current_list.length > 0) {
+        //     _current_list.removeAt(0);
+        //   }
+        // }
         _lt_list.addAll(ltString);
         _current_list.addAll(ltString);
       }
@@ -87,7 +87,6 @@ class LocaleProvider extends ChangeNotifier {
       return null;
     }
     finished = true;
-    notifyListeners();
     return true;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safari_one/models/animalhive.dart';
 import 'package:safari_one/models/animals.dart';
@@ -13,7 +14,9 @@ class AnimalEditPage extends StatefulWidget {
 
   AnimalEditPage({Key key}) : super(key: key);
 
-  AnimalEditPage.forEdit(this.index, {Key key}) : super(key: key);
+  AnimalEditPage.forEdit({Key key})
+      : index = int.parse(Get.parameters['value']),
+        super(key: key);
 
   @override
   State<StatefulWidget> createState() => _AnimalEditState();
@@ -36,7 +39,7 @@ class _AnimalEditState extends State<AnimalEditPage> {
   @override
   void initState() {
     if (null != widget.index) {
-      widget.animalHive = AnimalsProvider().animalList[widget.index];
+      widget.animalHive = AnimalsGetter().animallist[widget.index];
       name = widget.animalHive.name;
       nameRu = widget.animalHive.nameRu;
       nameEn = widget.animalHive.nameEn;
@@ -99,12 +102,12 @@ class _AnimalEditState extends State<AnimalEditPage> {
     // print(animal);
     if (null != widget.index) {
       setState(() {
-        AnimalsProvider().update(animal, widget.index);
+        AnimalsGetter().updateAnimal(animal, widget.index);
       });
       // print("Updated entry: " + animal.toString());
     } else {
       setState(() {
-        widget.index = AnimalsProvider().add(animal);
+        widget.index = AnimalsGetter().add(animal);
       });
       // print("New entry: " + animal.toString());
     }

@@ -19,11 +19,11 @@ class _TextButtonState extends State<StartText> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<int>(
-        future: LocaleProvider.loaded,
+        future: LocaleGetter.loaded,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           String textValue;
           if (snapshot.hasData) {
-            textValue = context.watch<LocaleProvider>().current_list[2];
+            textValue = context.watch<LocaleGetter>().current_list[2];
           } else {
             textValue = "Pradėti";
           }
